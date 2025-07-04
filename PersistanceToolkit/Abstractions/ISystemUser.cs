@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PersistanceToolkit.Abstractions
+{
+    public interface ISystemUser
+    {
+        public int UserId { get; set; }
+        public int CompanyId { get; set; }
+    }
+    public class SystemUser : ISystemUser
+    {
+        public int UserId { get; set; }
+        public int CompanyId { get; set; }
+    }
+}
