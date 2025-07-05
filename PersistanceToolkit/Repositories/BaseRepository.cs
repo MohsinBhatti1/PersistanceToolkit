@@ -1,15 +1,8 @@
 ﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using PersistanceToolkit.Abstractions;
-using PersistanceToolkit.Abstractions.Entities;
-using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolkit.Abstractions.Specifications;
+using PersistanceToolkit.Contract;
 using PersistanceToolkit.Persistance;
-using System.Reflection;
-using System.Text;
 
 namespace PersistanceToolkit.Repositories
 {

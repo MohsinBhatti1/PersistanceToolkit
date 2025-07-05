@@ -1,14 +1,13 @@
 ﻿using Ardalis.Specification;
-using PersistanceToolkit.Abstractions.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PersistanceToolkit.Abstractions.Repositories
+namespace PersistanceToolkit.Contract
 {
-    internal interface IReadBaseRepository<T> where T : BaseEntity
+    public interface IReadBaseRepository<T> where T : BaseEntity
     {
         Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
         Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
@@ -23,7 +22,7 @@ namespace PersistanceToolkit.Abstractions.Repositories
         Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(CancellationToken cancellationToken = default);
     }
-    internal interface IBaseRepository<T> : IReadBaseRepository<T> where T : BaseEntity
+    public interface IBaseRepository<T> : IReadBaseRepository<T> where T : BaseEntity
     {
     }
 }

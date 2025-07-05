@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using PersistanceToolkit.Abstractions.Entities;
+using PersistanceToolkit.Contract;
 
 namespace PersistanceToolkit.Abstractions.Specifications
 {

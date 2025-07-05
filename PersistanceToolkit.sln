@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit", "PersistanceToolkit\PersistanceToolkit.csproj", "{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EntityFrameworkCore", "Specification\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj", "{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Tests", "PersistanceToolkit.Tests\PersistanceToolkit.Tests.csproj", "{60FC3A18-9724-4B31-B395-E811F76D7442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Contract", "PersistanceToolkit.Contract\PersistanceToolkit.Contract.csproj", "{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{60FC3A18-9724-4B31-B395-E811F76D7442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60FC3A18-9724-4B31-B395-E811F76D7442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60FC3A18-9724-4B31-B395-E811F76D7442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

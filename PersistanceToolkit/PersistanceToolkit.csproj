@@ -12,7 +12,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PersistanceToolkit.Contract\PersistanceToolkit.Contract.csproj" />
     <ProjectReference Include="..\Specification\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PersistanceToolkit.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\Entities\" />
+    <Folder Include="Abstractions\Repositories\" />
   </ItemGroup>
 
 </Project>
