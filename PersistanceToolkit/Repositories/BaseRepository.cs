@@ -31,14 +31,14 @@ namespace PersistanceToolkit.Repositories
         {
             if
             (
-                !(DbContext as BaseContext).IsPropertyIgnored<T>("CompanyId") &&
+                !(DbContext as BaseContext).IsPropertyIgnored<T>(c => c.TenantId) &&
                 !specification.IgnoreCompanyFilter
             )
-                specification.Query.Where(c => c.TenantId == _systemUser.CompanyId);
+                specification.Query.Where(c => c.TenantId == _systemUser.TenantId);
 
             if
             (
-                !(DbContext as BaseContext).IsPropertyIgnored<T>("IsDeleted") &&
+                !(DbContext as BaseContext).IsPropertyIgnored<T>(c => c.IsDeleted) &&
                 !specification.IncludeDeletedRecords
             )
                 specification.Query.Where(c => !c.IsDeleted);

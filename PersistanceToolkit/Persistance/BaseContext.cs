@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 namespace PersistanceToolkit.Persistance
 {
 
@@ -26,8 +27,22 @@ namespace PersistanceToolkit.Persistance
             base.OnModelCreating(modelBuilder);
 
             ApplyConfiguration(modelBuilder);
+            
             DefineManualConfiguration(modelBuilder);
+            
+            AddIgnoredNavigationOnUpdate();
+        }
 
+
+
+        protected abstract void ApplyConfiguration(ModelBuilder modelBuilder);
+        protected abstract void DefineManualConfiguration(ModelBuilder modelBuilder);
+
+        #region Private & Internal Methods
+
+        #region Ignored Navigation Properties
+        private void AddIgnoredNavigationOnUpdate()
+        {
             var collected = NavigationIgnoreTracker.CollectAndReset();
             foreach (var kvp in collected)
             {
@@ -37,10 +52,6 @@ namespace PersistanceToolkit.Persistance
                 }
             }
         }
-        protected abstract void ApplyConfiguration(ModelBuilder modelBuilder);
-        protected abstract void DefineManualConfiguration(ModelBuilder modelBuilder);
-
-        #region Private & Internal Methods
         private void AddIgnoredNavigationOnUpdate(Type entityType, string propertyName)
         {
             if (!_ignoredNavigationsOnUpdate.ContainsKey(entityType))
@@ -53,8 +64,15 @@ namespace PersistanceToolkit.Persistance
         {
             return _ignoredNavigationsOnUpdate.TryGetValue(entityType, out var properties) && properties.Contains(propertyName);
         }
-        internal bool IsPropertyIgnored<T>(string propertyName) where T : class
+        #endregion
+
+        internal bool IsPropertyIgnored<T>(Expression<Func<T, object>> propertyExpression) where T : class
         {
+            if (propertyExpression == null)
+                throw new ArgumentNullException(nameof(propertyExpression));
+
+            string propertyName = GetPropertyName(propertyExpression);
+
             var entityType = Model.FindEntityType(typeof(T));
 
             if (entityType == null)
@@ -63,6 +81,20 @@ namespace PersistanceToolkit.Persistance
             }
 
             return !entityType.GetProperties().Any(p => p.Name == propertyName);
+        }
+        private static string GetPropertyName<T>(Expression<Func<T, object>> propertyExpression)
+        {
+            if (propertyExpression.Body is MemberExpression member)
+            {
+                return member.Member.Name;
+            }
+
+            if (propertyExpression.Body is UnaryExpression unary && unary.Operand is MemberExpression memberOperand)
+            {
+                return memberOperand.Member.Name;
+            }
+
+            throw new ArgumentException("Invalid property expression", nameof(propertyExpression));
         }
         #endregion
     }

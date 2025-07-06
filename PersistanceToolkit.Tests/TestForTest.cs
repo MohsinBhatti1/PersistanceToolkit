@@ -14,7 +14,7 @@ namespace PersistanceToolkit.Tests
         public TestForTest()
         {
             dbContext = CreateInMemoryContext();
-            var systemUser = new SystemUser { CompanyId = 1, UserId = 1 };
+            var systemUser = new SystemUser { TenantId = 1, UserId = 1 };
             repository = new BaseRepository<ParentTable>(dbContext, systemUser);
             userRepository = new BaseRepository<User>(dbContext, systemUser);
         }

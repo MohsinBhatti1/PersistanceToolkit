@@ -9,11 +9,11 @@ namespace PersistanceToolkit.Abstractions
     public interface ISystemUser
     {
         public int UserId { get; set; }
-        public int CompanyId { get; set; }
+        public int TenantId { get; set; }
     }
     public class SystemUser : ISystemUser
     {
         public int UserId { get; set; }
-        public int CompanyId { get; set; }
+        public int TenantId { get; set; }
     }
 }
