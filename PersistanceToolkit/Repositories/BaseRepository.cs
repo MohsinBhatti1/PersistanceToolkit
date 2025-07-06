@@ -6,7 +6,7 @@ using PersistanceToolkit.Persistance;
 
 namespace PersistanceToolkit.Repositories
 {
-    public class BaseRepository<T> : GenericRepository<T>, IBaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : GenericRepository<T> where T : BaseEntity
     {
         private readonly ISystemUser _systemUser;
         public BaseRepository(BaseContext dbContext, ISystemUser systemUser) : base(dbContext)

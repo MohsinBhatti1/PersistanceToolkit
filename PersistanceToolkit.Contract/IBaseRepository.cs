@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersistanceToolkit.Contract
 {
-    public interface IReadBaseRepository<T> where T : BaseEntity
+    public interface IReadBaseRepository<T> where T : class
     {
         Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
         Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
@@ -22,7 +22,7 @@ namespace PersistanceToolkit.Contract
         Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(CancellationToken cancellationToken = default);
     }
-    public interface IBaseRepository<T> : IReadBaseRepository<T> where T : BaseEntity
+    public interface IBaseRepository<T> : IReadBaseRepository<T> where T : class
     {
     }
 }

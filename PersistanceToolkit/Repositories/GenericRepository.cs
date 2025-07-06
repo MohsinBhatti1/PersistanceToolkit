@@ -3,13 +3,14 @@ using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
+using PersistanceToolkit.Contract;
 using PersistanceToolkit.Persistance;
 using System.Reflection;
 using System.Text;
 
 namespace PersistanceToolkit.Repositories
 {
-    public class GenericRepository<T> : RepositoryBase<T> where T : class
+    public class GenericRepository<T> : RepositoryBase<T>, IBaseRepository<T> where T : class
     {
         private readonly EntityStateProcessor _entityStateProcessor;
         public GenericRepository(BaseContext dbContext) : base(dbContext)
