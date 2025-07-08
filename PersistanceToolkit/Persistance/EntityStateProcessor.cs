@@ -1,56 +1,73 @@
 ﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
+using PersistanceToolkit.Abstractions;
+using PersistanceToolkit.Contract;
 using System.Reflection;
-using System.Text;
 
 namespace PersistanceToolkit.Persistance
 {
-    internal class EntityStateProcessor
+    internal class EntityAuditLogSetter
     {
-        private readonly BaseContext _dbContext;
+        private readonly ISystemUser _systemUser;
 
-        internal EntityStateProcessor(BaseContext dbContext)
+        public EntityAuditLogSetter(ISystemUser systemUser)
         {
-            _dbContext = dbContext;
+            _systemUser = systemUser ?? throw new ArgumentNullException(nameof(systemUser));
         }
 
-        internal void SetState(object entity)
+        internal void SetAuditLogsRecursively(BaseEntity rootEntity)
         {
-            var entry = _dbContext.Entry(entity);
-            entry.State = entry.IsKeySet ? EntityState.Modified : EntityState.Added;
+            if (rootEntity == null)
+                throw new ArgumentNullException(nameof(rootEntity));
 
-            ProcessNavigations(entry); // Recursive call for deeper levels
+            var now = DateTime.UtcNow;
+
+            ProcessEntity(rootEntity, now);
         }
-        private void ProcessNavigations(EntityEntry entry)
+
+        internal void SetAuditLogsRecursively(IEnumerable<BaseEntity> entities)
         {
-            foreach (var navigation in entry.Navigations)
+            foreach (var entity in entities)
             {
-                if (_dbContext.IsNavigationIgnoredOnUpdate(entry.Entity.GetType(), navigation.Metadata.Name))
-                {
-                    continue; // Skip setting state for ignored navigation
-                }
-
-                if (navigation.CurrentValue is IEnumerable<object> collection) // Handle collections
-                {
-                    foreach (var child in collection)
-                    {
-                        SetState(child); // Recursively process each child
-                    }
-                }
-                else if (navigation.CurrentValue != null) // Handle single entities
-                {
-                    SetState(navigation.CurrentValue);
-                }
+                SetAuditLogsRecursively(entity);
             }
         }
-        internal void DetachedAllTrackedEntries()
+
+        private void ProcessEntity(BaseEntity entity, DateTime timestamp)
         {
-            foreach (var entry in _dbContext.ChangeTracker.Entries().Where(e => e.State != EntityState.Detached))
+            entity.SetTenantId(_systemUser.TenantId);
+            entity.SetAuditLogs(_systemUser.UserId, timestamp);
+
+            var props = entity.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(p => p.CanRead && p.GetIndexParameters().Length == 0);
+
+            foreach (var prop in props)
             {
-                entry.State = EntityState.Detached;
+                var value = prop.GetValue(entity);
+                if (value == null) continue;
+
+                switch (value)
+                {
+                    case BaseEntity childEntity:
+                        ProcessEntity(childEntity, timestamp);
+                        break;
+
+                    case IEnumerable<BaseEntity> collection:
+                        foreach (var item in collection)
+                        {
+                            if (item != null)
+                                ProcessEntity(item, timestamp);
+                        }
+                        break;
+
+                    case System.Collections.IEnumerable enumerable:
+                        foreach (var item in enumerable)
+                        {
+                            if (item is BaseEntity nested)
+                                ProcessEntity(nested, timestamp);
+                        }
+                        break;
+                }
             }
         }
     }

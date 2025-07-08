@@ -71,7 +71,7 @@ namespace PersistanceToolkit.Persistance
             if (propertyExpression == null)
                 throw new ArgumentNullException(nameof(propertyExpression));
 
-            string propertyName = GetPropertyName(propertyExpression);
+            string propertyName = Helper.GetPropertyName(propertyExpression);
 
             var entityType = Model.FindEntityType(typeof(T));
 
@@ -81,20 +81,6 @@ namespace PersistanceToolkit.Persistance
             }
 
             return !entityType.GetProperties().Any(p => p.Name == propertyName);
-        }
-        private static string GetPropertyName<T>(Expression<Func<T, object>> propertyExpression)
-        {
-            if (propertyExpression.Body is MemberExpression member)
-            {
-                return member.Member.Name;
-            }
-
-            if (propertyExpression.Body is UnaryExpression unary && unary.Operand is MemberExpression memberOperand)
-            {
-                return memberOperand.Member.Name;
-            }
-
-            throw new ArgumentException("Invalid property expression", nameof(propertyExpression));
         }
         #endregion
     }

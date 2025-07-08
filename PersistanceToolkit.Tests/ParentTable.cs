@@ -11,7 +11,7 @@ namespace PersistanceToolkit.Tests
     public class ChildTable : BaseEntity
     {
         public int ParentId { get; set; }
-        public int ChildTitle { get; set; }
+        public string Title { get; set; }
     }
     public class User : BaseEntity
     {
