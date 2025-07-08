@@ -1,12 +1,8 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using PersistanceToolkit.Contract;
 using PersistanceToolkit.Persistance;
-using System.Reflection;
-using System.Text;
 
 namespace PersistanceToolkit.Repositories
 {
@@ -18,34 +14,38 @@ namespace PersistanceToolkit.Repositories
             _entityStateProcessor = new EntityStateProcessor(dbContext);
         }
 
-        public async Task<int> Save(T entity, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> Save(T entity, CancellationToken cancellationToken = default)
         {
-            try
-            {
-                _entityStateProcessor.SetState(entity);
-                return await SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                // Handle exception or log as needed
-                return 0;
-            }
+            _entityStateProcessor.SetState(entity);
+            return await SaveChangesAsync(cancellationToken) > 0;
         }
-        public async Task<int> SaveRange(List<T> entities, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> SaveRange(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
-            try
-            {
-                foreach (var entity in entities)
-                {
-                    _entityStateProcessor.SetState(entity);
-                }
-                return await SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                // Handle exception or log as needed
-                return 0;
-            }
+            foreach (var entity in entities)
+                _entityStateProcessor.SetState(entity);
+
+            return await SaveChangesAsync(cancellationToken) > 0;
+        }
+        public virtual new async Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken = default)
+        {
+            DbContext.Set<T>().Remove(entity);
+            return await SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        /// <inheritdoc/>
+        public virtual new async Task<bool> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+        {
+            DbContext.Set<T>().RemoveRange(entities);
+            return await SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        /// <inheritdoc/>
+        public virtual new async Task<bool> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+        {
+            var query = ApplySpecification(specification);
+            DbContext.Set<T>().RemoveRange(query);
+
+            return await SaveChangesAsync(cancellationToken) > 0;
         }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

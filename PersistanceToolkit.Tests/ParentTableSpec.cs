@@ -1,4 +1,5 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
+﻿using Ardalis.Specification;
+using PersistanceToolkit.Abstractions.Specifications;
 
 namespace PersistanceToolkit.Tests
 {
@@ -6,6 +7,7 @@ namespace PersistanceToolkit.Tests
     {
         public ParentTableSpec()
         {
+            Query.Include(c => c.ChildTables);
         }
     }
 }

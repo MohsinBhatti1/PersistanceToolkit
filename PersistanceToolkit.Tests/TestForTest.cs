@@ -2,28 +2,17 @@
 using PersistanceToolkit.Abstractions;
 using PersistanceToolkit.Persistance;
 using PersistanceToolkit.Repositories;
+using PersistanceToolkit.Tests.Initializers;
 using Xunit;
 
 namespace PersistanceToolkit.Tests
 {
-    public class TestForTest
+    public class TestForTest : IClassFixture<PTKTestFixture>
     {
-        SystemContext dbContext;
-        BaseRepository<ParentTable> repository;
-        BaseRepository<User> userRepository;
-        public TestForTest()
+        private readonly PTKTestFixture _fixture;
+        public TestForTest(PTKTestFixture fixture)
         {
-            dbContext = CreateInMemoryContext();
-            var systemUser = new SystemUser { TenantId = 1, UserId = 1 };
-            repository = new BaseRepository<ParentTable>(dbContext, systemUser);
-            userRepository = new BaseRepository<User>(dbContext, systemUser);
-        }
-        private SystemContext CreateInMemoryContext()
-        {
-            var options = new DbContextOptionsBuilder<BaseContext>()
-                .UseInMemoryDatabase("TestDB")
-                .Options;
-            return new SystemContext(options);
+            _fixture = fixture;
         }
 
         [Fact]
@@ -31,22 +20,21 @@ namespace PersistanceToolkit.Tests
         {
             var user = new User { FirstName = "Mohsin", LastName = "Naeem" };
             user.CreatedBy = 1;
-            await userRepository.Save(user);
+            await _fixture.UserRepository.Save(user);
 
             ParentTable parentTable = new ParentTable
             {
+                Id = 1,
                 Title = "123",
                 CreatedBy = 1,
                 TenantId = 1,
-                ChildTables = new List<ChildTable> { new ChildTable(), new ChildTable() },
+                ChildTables = new List<ChildTable> { new ChildTable() { ParentId = 1, Title = "456" }, new ChildTable() { ParentId = 1, Title = "789" } },
                 User = new User { Id = 1, FirstName = "Mohsin123", LastName = "Naeem" }
             };
-            await repository.Save(parentTable);
-
-            var result1 = dbContext.ParentTables.AsNoTracking().ToList();
+            await _fixture.ParentTableRepository.Save(parentTable);
 
             var spec = new ParentTableSpec();
-            var result = await repository.ListAsync(spec);
+            var result = await _fixture.ParentTableRepository.ListAsync(spec);
 
             Assert.Equal(1, 1);
         }

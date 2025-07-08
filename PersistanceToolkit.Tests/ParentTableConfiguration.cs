@@ -7,9 +7,6 @@ namespace PersistanceToolkit.Tests
 {
     public class ParentTableConfiguration : BaseConfiguration<ParentTable>
     {
-        public ParentTableConfiguration() : base()
-        {
-        }
         public override void Configure(EntityTypeBuilder<ParentTable> builder)
         {
             base.Configure(builder);
@@ -20,9 +17,32 @@ namespace PersistanceToolkit.Tests
 
             builder.HasOne(p => p.User).WithMany().HasForeignKey(p => p.CreatedBy).IsRequired();
 
-            builder.Ignore(p => p.IsDeleted);
+            //builder.Ignore(p => p.CreatedBy);
+            //builder.Ignore(p => p.CreatedOn);
+            //builder.Ignore(p => p.UpdatedBy);
+            //builder.Ignore(p => p.UpdatedOn);
+            //builder.Ignore(p => p.IsDeleted);
+            //builder.Ignore(p => p.DeletedBy);
+            //builder.Ignore(p => p.DeletedOn);
 
             builder.IgnoreOnUpdate(pb => pb.User);
+        }
+    }
+    public class ChildTableConfiguration : BaseConfiguration<ChildTable>
+    {
+        public override void Configure(EntityTypeBuilder<ChildTable> builder)
+        {
+            base.Configure(builder);
+
+            builder.ToTable("ChildTable");
+
+            //builder.Ignore(p => p.CreatedBy);
+            //builder.Ignore(p => p.CreatedOn);
+            //builder.Ignore(p => p.UpdatedBy);
+            //builder.Ignore(p => p.UpdatedOn);
+            //builder.Ignore(p => p.IsDeleted);
+            //builder.Ignore(p => p.DeletedBy);
+            //builder.Ignore(p => p.DeletedOn);
         }
     }
 }
