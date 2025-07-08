@@ -99,7 +99,10 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        var queryResult = await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return specification.PostProcessingAction is null
+            ? queryResult
+            : specification.PostProcessingAction(new List<T> { queryResult }).FirstOrDefault();
     }
 
     /// <inheritdoc/>
