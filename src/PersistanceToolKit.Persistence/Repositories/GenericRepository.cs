@@ -9,6 +9,8 @@ namespace PersistanceToolkit.Repositories
 {
     public class GenericRepository<T> : RepositoryBase<T>, IGenericRepository<T> where T : class
     {
+        private const int Skip = 0;
+        private const int Take = 20;
         private readonly EntityStateProcessor _entityStateProcessor;
         public GenericRepository(BaseContext dbContext) : base(dbContext)
         {
@@ -103,7 +105,7 @@ namespace PersistanceToolkit.Repositories
         #region List Methods with pagination
         public async Task<List<T>> PaginatedListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
         {
-            ImplementPagination(specification, 0, 20);
+            ImplementPagination(specification, Skip, 20);
             return await base.ListAsync(specification, cancellationToken);
         }
         public async Task<List<T>> PaginatedListAsync(ISpecification<T> specification, int skip, int take, CancellationToken cancellationToken = default)
@@ -113,7 +115,7 @@ namespace PersistanceToolkit.Repositories
         }
         public async Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
         {
-            ImplementPagination(specification, 0, 20);
+            ImplementPagination(specification, 0, Take);
             return await base.ListAsync(specification, cancellationToken);
         }
         public async Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, int skip, int take, CancellationToken cancellationToken = default)
