@@ -3,17 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit", "PersistanceToolkit\PersistanceToolkit.csproj", "{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ardalis", "Ardalis", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specification", "Specification", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43FC6B26-458E-432B-9FB0-31314E420AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification", "Specification\Ardalis.Specification\Ardalis.Specification.csproj", "{85C9759C-1B64-4D8D-5F7F-479FE0AEA405}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{236305D6-D22A-4F9C-93CA-F12E835A0583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EntityFrameworkCore", "Specification\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj", "{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification", "Ardalis\Ardalis.Specification\Ardalis.Specification.csproj", "{E308640A-6024-6C2C-9C80-1D513B122C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Tests", "PersistanceToolkit.Tests\PersistanceToolkit.Tests.csproj", "{60FC3A18-9724-4B31-B395-E811F76D7442}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EntityFrameworkCore", "Ardalis\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj", "{9AC1EBCF-5ED5-6215-C589-2678A527DB89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Contract", "PersistanceToolkit.Contract\PersistanceToolkit.Contract.csproj", "{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Abstractions", "src\PersistanceToolkit.Abstractions\PersistanceToolkit.Abstractions.csproj", "{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Domain", "src\PersistanceToolkit.Domain\PersistanceToolkit.Domain.csproj", "{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Persistence", "src\PersistanceToolKit.Persistence\PersistanceToolkit.Persistence.csproj", "{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Tests", "tests\PersistanceToolkit.Tests\PersistanceToolkit.Tests.csproj", "{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,33 +27,41 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{615AAD0C-30A3-4BA5-B9BB-3AA185E17C12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85C9759C-1B64-4D8D-5F7F-479FE0AEA405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85C9759C-1B64-4D8D-5F7F-479FE0AEA405}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85C9759C-1B64-4D8D-5F7F-479FE0AEA405}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85C9759C-1B64-4D8D-5F7F-479FE0AEA405}.Release|Any CPU.Build.0 = Release|Any CPU
-		{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{078340F3-67D6-F03F-6E5B-71AF37B3EB0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60FC3A18-9724-4B31-B395-E811F76D7442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60FC3A18-9724-4B31-B395-E811F76D7442}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60FC3A18-9724-4B31-B395-E811F76D7442}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60FC3A18-9724-4B31-B395-E811F76D7442}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EC29F3E-7EEB-4834-9FBA-2C2AC6DFF3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{85C9759C-1B64-4D8D-5F7F-479FE0AEA405} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{078340F3-67D6-F03F-6E5B-71AF37B3EB0C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E308640A-6024-6C2C-9C80-1D513B122C2D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9AC1EBCF-5ED5-6215-C589-2678A527DB89} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E} = {43FC6B26-458E-432B-9FB0-31314E420AEE}
+		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1} = {43FC6B26-458E-432B-9FB0-31314E420AEE}
+		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320} = {43FC6B26-458E-432B-9FB0-31314E420AEE}
+		{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC} = {236305D6-D22A-4F9C-93CA-F12E835A0583}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {481FEF30-05EC-4AB3-BE12-0AB095FE4407}
