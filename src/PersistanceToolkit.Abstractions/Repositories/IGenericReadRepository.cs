@@ -1,9 +1,8 @@
 ﻿using Ardalis.Specification;
-using PersistanceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions
+namespace PersistanceToolkit.Abstractions.Repositories
 {
-    public interface IGenericReadBaseRepository<T> where T : class
+    public interface IGenericReadRepository<T> where T : class
     {
         Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
@@ -20,20 +19,5 @@ namespace PersistanceToolkit.Abstractions
         Task<int> CountAsync(CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(CancellationToken cancellationToken = default);
-    }
-    public interface IGenericRepository<T> : IGenericReadBaseRepository<T> where T : class
-    {
-        Task<bool> Save(T entity, CancellationToken cancellationToken = default);
-        Task<bool> SaveRange(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-        Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken = default);
-        Task<bool> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-        Task<bool> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
-    }
-    public interface IEntityRepository<T> : IGenericRepository<T> where T : Entity
-    {
-        Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-    }
-    public interface IAggregateRepository<T> : IEntityRepository<T> where T : Entity, IAggregateRoot
-    {
     }
 }

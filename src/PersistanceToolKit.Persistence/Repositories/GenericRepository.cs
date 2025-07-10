@@ -1,13 +1,13 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PersistanceToolkit.Abstractions;
+using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolKit.Persistence.Persistance;
 using System.Data.SqlTypes;
 
 namespace PersistanceToolkit.Repositories
 {
-    public class GenericRepository<T> : RepositoryBase<T>, IGenericRepository<T> where T : class
+    public class GenericRepository<T> : RepositoryBase<T>, IGenericReadRepository<T> where T : class
     {
         private const int Skip = 0;
         private const int Take = 20;

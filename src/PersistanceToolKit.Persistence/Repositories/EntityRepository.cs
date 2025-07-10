@@ -1,12 +1,14 @@
 ﻿using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 using PersistanceToolkit.Abstractions;
+using PersistanceToolkit.Abstractions.Repositories;
+using PersistanceToolkit.Abstractions.Specifications;
 using PersistanceToolkit.Domain;
 using PersistanceToolKit.Persistence.Persistance;
 
 namespace PersistanceToolkit.Repositories
 {
-    public class EntityRepository<T> : GenericRepository<T>, IEntityRepository<T> where T : Entity
+    public class EntityRepository<T> : GenericRepository<T>, IEntityReadRepository<T> where T : Entity
     {
         private readonly ISystemUser _systemUser;
         public EntityRepository(BaseContext dbContext, ISystemUser systemUser) : base(dbContext)

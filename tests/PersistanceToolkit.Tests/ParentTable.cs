@@ -13,7 +13,7 @@ namespace PersistanceToolkit.Tests
         public int ParentId { get; set; }
         public string Title { get; set; }
     }
-    public class User : Entity
+    public class User : Entity, IAggregateRoot
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

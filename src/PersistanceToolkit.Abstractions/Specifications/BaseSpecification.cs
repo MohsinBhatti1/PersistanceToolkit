@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using PersistanceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions
+namespace PersistanceToolkit.Abstractions.Specifications
 {
     public abstract class BaseSpecification<T> : Specification<T>
         where T : Entity

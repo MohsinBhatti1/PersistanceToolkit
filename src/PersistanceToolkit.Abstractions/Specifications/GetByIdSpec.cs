@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using PersistanceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions
+namespace PersistanceToolkit.Abstractions.Specifications
 {
     public class GetByIdSpecification<T> : BaseSpecification<T>
         where T : Entity

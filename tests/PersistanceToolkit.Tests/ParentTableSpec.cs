@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using PersistanceToolkit.Abstractions;
+using PersistanceToolkit.Abstractions.Specifications;
 
 namespace PersistanceToolkit.Tests
 {

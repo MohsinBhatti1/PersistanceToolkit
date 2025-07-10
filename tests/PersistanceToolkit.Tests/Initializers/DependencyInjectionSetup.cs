@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersistanceToolkit.Abstractions;
+using PersistanceToolkit.Abstractions.Repositories;
+using PersistanceToolkit.Persistence;
 using PersistanceToolkit.Repositories;
 using PersistanceToolKit.Persistence.Persistance;
 
@@ -12,6 +14,12 @@ namespace PersistanceToolkit.Tests.Initializers
         {
             var services = new ServiceCollection();
 
+            RegisterDependncies(services);
+            return services.BuildServiceProvider();
+        }
+
+        private static void RegisterDependncies(ServiceCollection services)
+        {
             services.AddScoped<ISystemUser>(serviceProvider =>
             {
                 return new SystemUser { TenantId = 1, UserId = 1 };
@@ -20,23 +28,10 @@ namespace PersistanceToolkit.Tests.Initializers
             {
                 return CreateInMemoryContext();
             });
-            services.AddScoped<IAggregateRepository<ParentTable>>(serviceProvider =>
-            {
-                return new AggregateRepository<ParentTable>(
-                    serviceProvider.GetRequiredService<BaseContext>(), 
-                    serviceProvider.GetRequiredService<ISystemUser>()
-                );
-            });
-            services.AddScoped<IEntityRepository<User>>(serviceProvider =>
-            {
-                return new EntityRepository<User>(
-                    serviceProvider.GetRequiredService<BaseContext>(), 
-                    serviceProvider.GetRequiredService<ISystemUser>()
-                );
-            });
-            //services.AddScoped(typeof(IAggregateRepository<>), typeof(EntityRepository<>));
-            return services.BuildServiceProvider();
+
+            services.RegisterPersistanceToolkitDependencies();
         }
+
         private static SystemContext CreateInMemoryContext()
         {
             var options = new DbContextOptionsBuilder<BaseContext>()
