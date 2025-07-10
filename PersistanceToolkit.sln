@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Abstract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Domain", "src\PersistanceToolkit.Domain\PersistanceToolkit.Domain.csproj", "{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolKit.Persistence", "src\PersistanceToolKit.Persistence\PersistanceToolKit.Persistence.csproj", "{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Persistence", "src\PersistanceToolKit.Persistence\PersistanceToolkit.Persistence.csproj", "{2F9BB899-8774-4FF7-8D7B-3609A9FDF320}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Tests", "tests\PersistanceToolkit.Tests\PersistanceToolkit.Tests.csproj", "{0588A4A7-2274-B6C8-FF96-9CAE3A4BE8DC}"
 EndProject
