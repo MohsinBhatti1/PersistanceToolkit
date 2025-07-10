@@ -10,11 +10,9 @@ namespace PersistanceToolkit.Repositories
     public class BaseRepository<T> : GenericRepository<T> where T : BaseEntity
     {
         private readonly ISystemUser _systemUser;
-        private EntityAuditLogSetter _auditLogSetter;
         public BaseRepository(BaseContext dbContext, ISystemUser systemUser) : base(dbContext)
         {
             _systemUser = systemUser;
-            _auditLogSetter = new EntityAuditLogSetter(systemUser);
         }
 
         #region Specification Methods
@@ -51,14 +49,50 @@ namespace PersistanceToolkit.Repositories
         #endregion
 
         #region Save(Add & Update)/Delete Methods
-        public override Task<bool> Save(T entity, CancellationToken cancellationToken = default)
+        public override async Task<bool> Save(T entity, CancellationToken cancellationToken = default)
         {
-            _auditLogSetter.SetAuditLogsRecursively(entity);
-            return base.Save(entity, cancellationToken);
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            SetAuditLogs(entity);
+
+            var result = await base.Save(entity, cancellationToken);
+
+            if (result)
+                ResetHasChanges(entity);
+
+            return result;
         }
+
+        private void ResetHasChanges(T entity)
+        {
+            Helper.TraverseEntities(entity, item =>
+            {
+                item.CaptureLoadTimeSnapshot();
+            });
+        }
+        private void SetAuditLogs(T entity)
+        {
+            Helper.TraverseEntities(entity, item =>
+            {
+                if (item.HasChange())
+                {
+                    item.SetTenantId(_systemUser.TenantId);
+                    item.SetAuditLogs(_systemUser.UserId, DateTime.Now);
+                }
+            });
+        }
+        private void SetAuditLogs(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                SetAuditLogs(entity);
+            }
+        }
+
         public override Task<bool> SaveRange(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
-            _auditLogSetter.SetAuditLogsRecursively(entities);
+            SetAuditLogs(entities);
             return base.SaveRange(entities, cancellationToken);
         }
         public override async Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken = default)

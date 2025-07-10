@@ -15,60 +15,20 @@ namespace PersistanceToolkit.Abstractions.Specifications
             Query.PostProcessingAction(a =>
             {
                 var lst = (a as IEnumerable<BaseEntity>)?.ToList() ?? new List<BaseEntity>();
-                SetJsonData(lst);
+                CaptureLoadTimeSnapshot(lst);
                 return a;
             });
         }
 
-        private void SetJsonData(List<BaseEntity> lst)
+        private void CaptureLoadTimeSnapshot(List<BaseEntity> lst)
         {
-            foreach (var item in lst)
+            foreach (var entity in lst)
             {
-                SetJsonData(item);
-            }
-        }
-
-        private void SetJsonData(BaseEntity entity)
-        {
-            SetJsonSnapShot(entity);
-
-            var props = entity.GetType()
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.CanRead && p.GetIndexParameters().Length == 0);
-
-            foreach (var prop in props)
-            {
-                var value = prop.GetValue(entity);
-                if (value == null) continue;
-
-                switch (value)
+                Helper.TraverseEntities(entity, item =>
                 {
-                    case BaseEntity childEntity:
-                        SetJsonData(childEntity);
-                        break;
-
-                    case IEnumerable<BaseEntity> collection:
-                        foreach (var item in collection)
-                        {
-                            if (item != null)
-                                SetJsonData(item);
-                        }
-                        break;
-
-                    case System.Collections.IEnumerable enumerable:
-                        foreach (var item in enumerable)
-                        {
-                            if (item is BaseEntity nested)
-                                SetJsonData(nested);
-                        }
-                        break;
-                }
+                    item.CaptureLoadTimeSnapshot();
+                });
             }
-        }
-        private void SetJsonSnapShot(BaseEntity entity)
-        {
-            entity.LoadTimeSnapshot = entity.GetSnapshot();
-
         }
     }
 }

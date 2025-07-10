@@ -22,24 +22,20 @@ namespace PersistanceToolkit.Tests
             {
 
                 var user = new User { FirstName = "Mohsin", LastName = "Naeem" };
-                user.CreatedBy = 1;
                 await _fixture.UserRepository.Save(user);
 
                 ParentTable parentTable = new ParentTable
                 {
-                    Id = 0,
                     Title = "123",
-                    CreatedBy = 1,
-                    TenantId = 1,
                     ChildTables = new List<ChildTable> { new ChildTable() { ParentId = 1, Title = "456" }, new ChildTable() { ParentId = 1, Title = "789" } },
-                    User = new User { Id = 1, FirstName = "Mohsin123", LastName = "Naeem" }
+                    User = new User { FirstName = "Mohsin123", LastName = "Naeem" }
                 };
                 await _fixture.ParentTableRepository.Save(parentTable);
 
                 var spec = new ParentTableSpec();
                 var result = await _fixture.ParentTableRepository.FirstOrDefaultAsync(spec);
                 result.ChildTables.First().Title = "124";
-                await _fixture.ParentTableRepository.Save(parentTable);
+                await _fixture.ParentTableRepository.Save(result);
             }
             catch (Exception ex)
             {

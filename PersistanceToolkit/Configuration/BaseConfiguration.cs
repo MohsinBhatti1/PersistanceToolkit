@@ -11,7 +11,6 @@ namespace PersistanceToolkit.Configuration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Ignore(x => x.LoadTimeSnapshot);
         }
     }
 }

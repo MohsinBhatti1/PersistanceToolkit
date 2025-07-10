@@ -1,41 +1,28 @@
-﻿using System.Text.Json;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace PersistanceToolkit.Contract
 {
     public abstract class BaseEntity
     {
-        [JsonIgnore]
-        public string LoadTimeSnapshot { get; set; } = string.Empty;
-        public bool HasChange()
-        {
-            return LoadTimeSnapshot != GetSnapshot();
-        }
-        public string GetSnapshot()
-        {
-            var actualType = GetType();
-            return System.Text.Json.JsonSerializer.Serialize(
-                this,
-                actualType,
-                new System.Text.Json.JsonSerializerOptions
-                {
-                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
-                    PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
-                });
-        }
         public int Id { get; set; }
-        public int TenantId { get; set; }
+        public int TenantId { get; private set; }
 
-        public int CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public int CreatedBy { get; private set; }
+        public DateTime CreatedOn { get; private set; }
 
-        public int UpdatedBy { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public int UpdatedBy { get; private set; }
+        public DateTime UpdatedOn { get; private set; }
 
-        public bool IsDeleted { get; set; }
-        public int? DeletedBy { get; set; }
-        public DateTime? DeletedOn { get; set; }
+        public bool IsDeleted { get; private set; }
+        public int? DeletedBy { get; private set; }
+        public DateTime? DeletedOn { get; private set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        private string LoadTimeSnapshot { get; set; } = string.Empty;
+
 
         public void MarkAsDeleted(int deletedBy, DateTime deletedOn)
         {
@@ -45,7 +32,7 @@ namespace PersistanceToolkit.Contract
         }
         public void SetAuditLogs(int userId, DateTime dateTime)
         {
-            if (CreatedBy == 0)
+            if (Id == 0)
             {
                 CreatedBy = userId;
                 CreatedOn = dateTime;
@@ -57,6 +44,28 @@ namespace PersistanceToolkit.Contract
         public void SetTenantId(int tenantId)
         {
             TenantId = tenantId;
+        }
+
+        public bool HasChange()
+        {
+            return LoadTimeSnapshot != GetSnapshot();
+        }
+        public void CaptureLoadTimeSnapshot()
+        {
+            LoadTimeSnapshot = GetSnapshot();
+        }
+        private string GetSnapshot()
+        {
+            var actualType = GetType();
+            return JsonSerializer.Serialize(
+                this,
+                actualType,
+                new JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                });
         }
     }
 }
