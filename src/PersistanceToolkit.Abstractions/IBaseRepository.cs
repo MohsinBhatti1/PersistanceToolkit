@@ -5,14 +5,17 @@ namespace PersistanceToolkit.Abstractions
 {
     public interface IGenericReadBaseRepository<T> where T : class
     {
-        Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
         Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
-        Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default);
-        Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+        Task<T?> SingleOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+        Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
         Task<List<T>> ListAsync(CancellationToken cancellationToken = default);
         Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+        Task<List<T>> PaginatedListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+        Task<List<T>> PaginatedListAsync(ISpecification<T> specification, int skip, int take, CancellationToken cancellationToken = default);
+        Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+        Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, int skip, int take, CancellationToken cancellationToken = default);
         Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
         Task<int> CountAsync(CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
@@ -28,6 +31,7 @@ namespace PersistanceToolkit.Abstractions
     }
     public interface IEntityRepository<T> : IGenericRepository<T> where T : Entity
     {
+        Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     }
     public interface IAggregateRepository<T> : IEntityRepository<T> where T : Entity, IAggregateRoot
     {

@@ -17,34 +17,60 @@ namespace PersistanceToolkit.Repositories
         #region Specification Methods
         protected override IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
         {
-            if (specification is BaseSpecification<T>)
-                SetBaseSpecification(specification as BaseSpecification<T>);
+            if (specification is BaseSpecification<T> baseSpec)
+                ApplyTenantAndSoftDeleteFilters(baseSpec);
 
             return base.ApplySpecification(specification, evaluateCriteriaOnly);
         }
+
         protected override IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is BaseSpecification<T>)
-                SetBaseSpecification(specification as BaseSpecification<T>);
+            if (specification is BaseSpecification<T, TResult> baseSpec)
+                ApplyTenantAndSoftDeleteFilters(baseSpec);
 
             return base.ApplySpecification(specification);
         }
-        private void SetBaseSpecification(BaseSpecification<T> specification)
-        {
-            if
-            (
-                !(DbContext as BaseContext).IsPropertyIgnored<T>(c => c.TenantId) &&
-                !specification.IgnoreCompanyFilter
-            )
-                specification.Query.Where(c => c.TenantId == _systemUser.TenantId);
 
-            if
-            (
-                !(DbContext as BaseContext).IsPropertyIgnored<T>(c => c.IsDeleted) &&
-                !specification.IncludeDeletedRecords
-            )
+        private void ApplyTenantAndSoftDeleteFilters(BaseSpecification<T> specification)
+        {
+            var context = (BaseContext)DbContext;
+
+            if (!context.IsPropertyIgnored<T>(c => c.TenantId) &&
+                !specification.IgnoreCompanyFilter)
+            {
+                specification.Query.Where(c => c.TenantId == _systemUser.TenantId);
+            }
+
+            if (!context.IsPropertyIgnored<T>(c => c.IsDeleted) &&
+                !specification.IncludeDeletedRecords)
+            {
                 specification.Query.Where(c => !c.IsDeleted);
+            }
         }
+
+        private void ApplyTenantAndSoftDeleteFilters<TResult>(BaseSpecification<T, TResult> specification)
+        {
+            var context = (BaseContext)DbContext;
+
+            if (!context.IsPropertyIgnored<T>(c => c.TenantId) &&
+                !specification.IgnoreCompanyFilter)
+            {
+                specification.Query.Where(c => c.TenantId == _systemUser.TenantId);
+            }
+
+            if (!context.IsPropertyIgnored<T>(c => c.IsDeleted) &&
+                !specification.IncludeDeletedRecords)
+            {
+                specification.Query.Where(c => !c.IsDeleted);
+            }
+        }
+
+        public async Task<T> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var spec = new GetByIdSpecification<T>(id);
+            return await SingleOrDefaultAsync(spec, cancellationToken);
+        }
+
         #endregion
 
         #region Save(Add & Update)/Delete Methods

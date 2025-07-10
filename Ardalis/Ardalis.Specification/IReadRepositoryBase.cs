@@ -52,7 +52,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
-    Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<T?> SingleOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
@@ -63,7 +63,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
     /// </returns>
-    Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+    Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds all entities of <typeparamref name="T" /> from the database.

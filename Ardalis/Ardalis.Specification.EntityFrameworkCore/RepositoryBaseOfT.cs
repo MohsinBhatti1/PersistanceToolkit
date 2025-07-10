@@ -99,10 +99,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        var queryResult = await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
-        return specification.PostProcessingAction is null
-            ? queryResult
-            : specification.PostProcessingAction(new List<T> { queryResult }).FirstOrDefault();
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -112,13 +109,13 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> SingleOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
-    public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
     }

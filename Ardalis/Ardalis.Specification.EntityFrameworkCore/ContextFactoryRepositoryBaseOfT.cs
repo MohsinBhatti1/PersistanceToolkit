@@ -41,14 +41,14 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     }
 
     /// <inheritdoc/>
-    public async Task<TEntity?> SingleOrDefaultAsync(ISingleResultSpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> SingleOrDefaultAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         return await ApplySpecification(specification, dbContext).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<TEntity, TResult> specification,
+    public async Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<TEntity, TResult> specification,
       CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
