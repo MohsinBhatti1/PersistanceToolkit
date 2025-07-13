@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 
 namespace PersistanceToolkit.Persistence
 {
-    public static class DependencyInjectionConfigurations
+    public static class PersistanceToolkitServiceCollectionExtensions
     {
-        public static void RegisterPersistanceToolkitDependencies(this ServiceCollection services)
+        public static ServiceCollection AddPersistanceToolkit(this ServiceCollection services)
         {
             services.AddScoped(typeof(IGenericReadRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IEntityReadRepository<>), typeof(EntityRepository<>));
             services.AddScoped(typeof(IAggregateReadRepository<>), typeof(AggregateRepository<>));
             services.AddScoped(typeof(IAggregateRepository<>), typeof(AggregateRepository<>));
+            return services;
         }
     }
 }

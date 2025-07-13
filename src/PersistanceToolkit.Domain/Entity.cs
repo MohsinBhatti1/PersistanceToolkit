@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -48,24 +49,11 @@ namespace PersistanceToolkit.Domain
 
         public bool HasChange()
         {
-            return LoadTimeSnapshot != GetSnapshot();
+            return LoadTimeSnapshot != this.GetJson();
         }
         public void CaptureLoadTimeSnapshot()
         {
-            LoadTimeSnapshot = GetSnapshot();
-        }
-        private string GetSnapshot()
-        {
-            var actualType = GetType();
-            return JsonSerializer.Serialize(
-                this,
-                actualType,
-                new JsonSerializerOptions
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
-                });
+            LoadTimeSnapshot = this.GetJson();
         }
     }
 }

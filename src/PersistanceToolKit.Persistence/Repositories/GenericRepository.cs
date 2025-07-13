@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolKit.Persistence.Persistance;
 using System.Data.SqlTypes;
+using PersistanceToolkit.Domain;
+using PersistanceToolkit.Abstractions.Specifications;
 
 namespace PersistanceToolkit.Repositories
 {
     public class GenericRepository<T> : RepositoryBase<T>, IGenericReadRepository<T> where T : class
     {
-        private const int Skip = 0;
-        private const int Take = 20;
         private readonly EntityStateProcessor _entityStateProcessor;
         public GenericRepository(BaseContext dbContext) : base(dbContext)
         {
@@ -103,30 +103,37 @@ namespace PersistanceToolkit.Repositories
         }
 
         #region List Methods with pagination
-        public async Task<List<T>> PaginatedListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<T>> PaginatedListAsync(ISpecification<T> specification, int skip, int take, CancellationToken cancellationToken = default)
         {
-            ImplementPagination(specification, Skip, 20);
-            return await base.ListAsync(specification, cancellationToken);
+            SetPaginationValues(specification, skip, take);
+            var result = await base.ListAsync(specification);
+            RemovePaginationValues(specification);
+
+            int count = 0;
+            if (result.Count > 0 && skip == 0)
+                count = await CountAsync(specification);
+            return new PaginatedResult<T>(result, count);
         }
-        public async Task<List<T>> PaginatedListAsync(ISpecification<T> specification, int skip, int take, CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, int skip, int take, CancellationToken cancellationToken = default)
         {
-            ImplementPagination(specification, skip, take);
-            return await base.ListAsync(specification, cancellationToken);
+            SetPaginationValues(specification, skip, take);
+            var result = await base.ListAsync(specification);
+            RemovePaginationValues(specification);
+
+            int count = 0;
+            if (result.Count > 0 && skip == 0)
+                count = await CountAsync(specification);
+            return new PaginatedResult<TResult>(result, count);
         }
-        public async Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+        private static void SetPaginationValues(ISpecification<T> specification, int skip, int take)
         {
-            ImplementPagination(specification, 0, Take);
-            return await base.ListAsync(specification, cancellationToken);
+            specification.Query.Skip(skip);
+            specification.Query.Take(take);
         }
-        public async Task<List<TResult>> PaginatedListAsync<TResult>(ISpecification<T, TResult> specification, int skip, int take, CancellationToken cancellationToken = default)
+        private static void RemovePaginationValues(ISpecification<T> specification)
         {
-            ImplementPagination(specification, skip, take);
-            return await base.ListAsync(specification, cancellationToken);
-        }
-        private static void ImplementPagination(ISpecification<T> specification, int skip, int take)
-        {
-            specification.Query.Skip(skip); // Reset skip for pagination
-            specification.Query.Take(take); // Set a default page size, can be adjusted as needed
+            specification.Query.Skip(-1);
+            specification.Query.Take(-1);
         }
         #endregion
     }

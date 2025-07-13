@@ -29,7 +29,7 @@ namespace PersistanceToolkit.Tests.Initializers
                 return CreateInMemoryContext();
             });
 
-            services.RegisterPersistanceToolkitDependencies();
+            services.AddPersistanceToolkit();
         }
 
         private static SystemContext CreateInMemoryContext()
@@ -42,14 +42,6 @@ namespace PersistanceToolkit.Tests.Initializers
         private static SystemContext CreateDBContext()
         {
             return new SystemContext("Data Source=10.4.0.8;Initial Catalog=iCM_Prod_Eagle;user id =mnaeem; password=Mnb@312419;TrustServerCertificate=True;");
-        }
-        private static void SeedDatabase(SystemContext context)
-        {
-            // Add your predefined data
-            //context.Set<ScheduleTemplate>().Add(new MyEntity { Name = "Test Entity 1", IsActive = true });
-            //context.Set<ScheduleTemplate>().Add(new MyEntity { Name = "Test Entity 2", IsActive = false });
-
-            // Add more entities as needed
         }
     }
 }

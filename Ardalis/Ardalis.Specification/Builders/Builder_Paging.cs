@@ -67,7 +67,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            if (builder.Specification.Take != -1) throw new DuplicateTakeException();
+            //if (builder.Specification.Take != -1) throw new DuplicateTakeException();
             builder.Specification.Take = take;
         }
 
@@ -139,7 +139,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            if (builder.Specification.Skip != -1) throw new DuplicateSkipException();
+            //if (builder.Specification.Skip != -1) throw new DuplicateSkipException();
             builder.Specification.Skip = skip;
         }
 
