@@ -26,6 +26,7 @@ namespace PersistanceToolkit.Tests
             //builder.Ignore(p => p.DeletedOn);
 
             builder.IgnoreOnUpdate(pb => pb.User);
+            builder.IgnoreOnUpdate(pb => pb.IgnoredChild);
         }
     }
     public class ChildTableConfiguration : BaseConfiguration<ChildTable>
@@ -35,6 +36,26 @@ namespace PersistanceToolkit.Tests
             base.Configure(builder);
 
             builder.ToTable("ChildTable");
+
+            builder.HasMany(c => c.GrandChildTables).WithOne().HasForeignKey(gc => gc.ChildId).IsRequired(false);
+
+            //builder.Ignore(p => p.CreatedBy);
+            //builder.Ignore(p => p.CreatedOn);
+            //builder.Ignore(p => p.UpdatedBy);
+            //builder.Ignore(p => p.UpdatedOn);
+            //builder.Ignore(p => p.IsDeleted);
+            //builder.Ignore(p => p.DeletedBy);
+            //builder.Ignore(p => p.DeletedOn);
+        }
+    }
+    
+    public class GrandChildTableConfiguration : BaseConfiguration<GrandChildTable>
+    {
+        public override void Configure(EntityTypeBuilder<GrandChildTable> builder)
+        {
+            base.Configure(builder);
+
+            builder.ToTable("GrandChildTable");
 
             //builder.Ignore(p => p.CreatedBy);
             //builder.Ignore(p => p.CreatedOn);

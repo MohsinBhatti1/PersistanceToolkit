@@ -5,6 +5,7 @@ using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolkit.Persistence;
 using PersistanceToolkit.Repositories;
 using PersistanceToolKit.Persistence.Persistance;
+using System;
 
 namespace PersistanceToolkit.Tests.Initializers
 {
@@ -34,8 +35,9 @@ namespace PersistanceToolkit.Tests.Initializers
 
         private static SystemContext CreateInMemoryContext()
         {
+            var dbName = $"TestDB_{Guid.NewGuid()}";
             var options = new DbContextOptionsBuilder<BaseContext>()
-                .UseInMemoryDatabase("TestDB")
+                .UseInMemoryDatabase(dbName)
                 .Options;
             return new SystemContext(options);
         }

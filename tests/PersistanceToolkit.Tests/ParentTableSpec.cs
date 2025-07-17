@@ -7,7 +7,8 @@ namespace PersistanceToolkit.Tests
     {
         public ParentTableSpec()
         {
-            Query.Include(c => c.ChildTables);
+            Query.Include(c => c.ChildTables)
+                 .ThenInclude(child => child.GrandChildTables);
         }
     }
 }

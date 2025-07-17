@@ -104,7 +104,11 @@ namespace PersistanceToolkit.Repositories
             {
                 if (item.HasChange())
                 {
-                    item.SetTenantId(_systemUser.TenantId);
+                    // Only set TenantId for new entities (Id == 0)
+                    if (item.Id == 0)
+                    {
+                        item.SetTenantId(_systemUser.TenantId);
+                    }
                     item.SetAuditLogs(_systemUser.UserId, DateTime.Now);
                 }
             });
@@ -116,11 +120,23 @@ namespace PersistanceToolkit.Repositories
                 SetAuditLogs(entity);
             }
         }
+        private void ResetHasChanges(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                ResetHasChanges(entity);
+            }
+        }
 
-        public override Task<bool> SaveRange(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+        public async override Task<bool> SaveRange(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             SetAuditLogs(entities);
-            return base.SaveRange(entities, cancellationToken);
+            var result = await base.SaveRange(entities, cancellationToken);
+
+            if (result)
+                ResetHasChanges(entities);
+
+            return result;
         }
         public override async Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken = default)
         {

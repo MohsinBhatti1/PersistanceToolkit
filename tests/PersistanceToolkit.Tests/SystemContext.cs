@@ -22,6 +22,7 @@ namespace PersistanceToolkit.Tests
         {
             modelBuilder.ApplyConfiguration(new ParentTableConfiguration());
             modelBuilder.ApplyConfiguration(new ChildTableConfiguration());
+            modelBuilder.ApplyConfiguration(new GrandChildTableConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
         protected override void DefineManualConfiguration(ModelBuilder modelBuilder)

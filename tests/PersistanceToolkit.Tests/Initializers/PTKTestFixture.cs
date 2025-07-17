@@ -9,10 +9,12 @@ namespace PersistanceToolkit.Tests.Initializers
     {
         public IAggregateRepository<ParentTable> ParentTableRepository;
         public IAggregateRepository<User> UserRepository;
+        public SystemContext SystemContext;
         public PTKTestFixture()
         {
             var serviceProvider = DependencyInjectionSetup.InitializeServiceProvider();
 
+            SystemContext = serviceProvider.GetService<SystemContext>();
             var systemUser = serviceProvider.GetService<ISystemUser>();
             ParentTableRepository = serviceProvider.GetService<IAggregateRepository<ParentTable>>();
             UserRepository = serviceProvider.GetService<IAggregateRepository<User>>();
