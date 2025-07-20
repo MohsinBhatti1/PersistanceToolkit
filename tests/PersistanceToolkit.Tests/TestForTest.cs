@@ -22,15 +22,15 @@ namespace PersistanceToolkit.Tests
                 var user = new User { FirstName = "Mohsin", LastName = "Naeem" };
                 await _fixture.UserRepository.Save(user);
 
-                ParentTable parentTable = GetParentTableObj();
-                await _fixture.ParentTableRepository.Save(parentTable);
+                Parent parent = GetParentObj();
+                await _fixture.ParentRepository.Save(parent);
 
-                var spec = new ParentTableSpec();
-                var result = await _fixture.ParentTableRepository.FirstOrDefaultAsync(spec);
-                result.ChildTables.First().Title = "124";
-                await _fixture.ParentTableRepository.Save(result);
+                var spec = new ParentSpec();
+                var result = await _fixture.ParentRepository.FirstOrDefaultAsync(spec);
+                result.Children.First().Title = "124";
+                await _fixture.ParentRepository.Save(result);
                 var obj = result.DeepClone();
-                var obj1 = obj.GetJson().GetObject<ParentTable>();
+                var obj1 = obj.GetJson().GetObject<Parent>();
 
             }
             catch (Exception ex)
@@ -49,15 +49,15 @@ namespace PersistanceToolkit.Tests
                 var user = new User { FirstName = "Mohsin", LastName = "Naeem" };
                 await _fixture.UserRepository.Save(user);
 
-                ParentTable parentTable = GetParentTableObj();
-                await _fixture.ParentTableRepository.Save(parentTable);
+                Parent parent = GetParentObj();
+                await _fixture.ParentRepository.Save(parent);
 
-                var spec = new ParentTableSpec();
-                var result = await _fixture.ParentTableRepository.FirstOrDefaultAsync(spec);
-                result.ChildTables.First().Title = "124";
-                await _fixture.ParentTableRepository.Save(result);
+                var spec = new ParentSpec();
+                var result = await _fixture.ParentRepository.FirstOrDefaultAsync(spec);
+                result.Children.First().Title = "124";
+                await _fixture.ParentRepository.Save(result);
                 var obj = result.DeepClone();
-                var obj1 = obj.GetJson().GetObject<ParentTable>();
+                var obj1 = obj.GetJson().GetObject<Parent>();
 
             }
             catch (Exception ex)
@@ -68,12 +68,12 @@ namespace PersistanceToolkit.Tests
             Assert.Equal(1, 1);
         }
 
-        private static ParentTable GetParentTableObj()
+        private static Parent GetParentObj()
         {
-            return new ParentTable
+            return new Parent
             {
                 Title = "123",
-                ChildTables = new List<ChildTable> { new ChildTable() { ParentId = 1, Title = "456" }, new ChildTable() { ParentId = 1, Title = "789" } },
+                Children = new List<Child> { new Child() { ParentId = 1, Title = "456" }, new Child() { ParentId = 1, Title = "789" } },
                 User = new User { FirstName = "Mohsin123", LastName = "Naeem" }
             };
         }

@@ -16,11 +16,11 @@ namespace PersistanceToolkit.Tests
         {
             try
             {
-                var result = await _fixture.ParentTableRepository.SaveRange(GetParentTableObjects());
+                var result = await _fixture.ParentRepository.SaveRange(GetParentObjects());
 
-                var spec = new ParentTableSpec();
-                var paginatedData = await _fixture.ParentTableRepository.PaginatedListAsync(spec, 980, 100);
-                var allData = await _fixture.ParentTableRepository.ListAsync(spec);
+                var spec = new ParentSpec();
+                var paginatedData = await _fixture.ParentRepository.PaginatedListAsync(spec, 980, 100);
+                var allData = await _fixture.ParentRepository.ListAsync(spec);
             }
             catch (Exception ex)
             {
@@ -28,22 +28,22 @@ namespace PersistanceToolkit.Tests
             }
             Assert.Equal(1, 1);
         }
-        private static List<ParentTable> GetParentTableObjects()
+        private static List<Parent> GetParentObjects()
         {
-            List<ParentTable> parentTables = new List<ParentTable>();
+            List<Parent> parents = new List<Parent>();
             for (int i = 0; i < 1000; i++)
             {
-                parentTables.Add(new ParentTable
+                parents.Add(new Parent
                 {
                     Title = $"Parent {i}",
-                    ChildTables = new List<ChildTable>
+                    Children = new List<Child>
                     {
-                        new ChildTable() { Title = $"Child {i}-1" },
-                        new ChildTable() { Title = $"Child {i}-2" }
+                        new Child() { Title = $"Child {i}-1" },
+                        new Child() { Title = $"Child {i}-2" }
                     }
                 });
             }
-            return parentTables;
+            return parents;
         }
     }
 }

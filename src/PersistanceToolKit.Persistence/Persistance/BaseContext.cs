@@ -31,7 +31,7 @@ namespace PersistanceToolKit.Persistence.Persistance
             
             DefineManualConfiguration(modelBuilder);
             
-            AddIgnoredNavigationOnUpdate();
+            //AddIgnoredNavigationOnUpdate();
         }
 
 
@@ -42,28 +42,28 @@ namespace PersistanceToolKit.Persistence.Persistance
         #region Private & Internal Methods
 
         #region Ignored Navigation Properties
-        private void AddIgnoredNavigationOnUpdate()
-        {
-            var collected = NavigationIgnoreTracker.CollectAndReset();
-            foreach (var kvp in collected)
-            {
-                foreach (var prop in kvp.Value.Distinct())
-                {
-                    AddIgnoredNavigationOnUpdate(kvp.Key, prop);
-                }
-            }
-        }
-        private void AddIgnoredNavigationOnUpdate(Type entityType, string propertyName)
-        {
-            if (!_ignoredNavigationsOnUpdate.ContainsKey(entityType))
-            {
-                _ignoredNavigationsOnUpdate[entityType] = new List<string>();
-            }
-            _ignoredNavigationsOnUpdate[entityType].Add(propertyName);
-        }
+        //private void AddIgnoredNavigationOnUpdate()
+        //{
+        //    var collected = NavigationIgnoreTracker.CollectAndReset();
+        //    foreach (var kvp in collected)
+        //    {
+        //        foreach (var prop in kvp.Value.Distinct())
+        //        {
+        //            AddIgnoredNavigationOnUpdate(kvp.Key, prop);
+        //        }
+        //    }
+        //}
+        //private void AddIgnoredNavigationOnUpdate(Type entityType, string propertyName)
+        //{
+        //    if (!_ignoredNavigationsOnUpdate.ContainsKey(entityType))
+        //    {
+        //        _ignoredNavigationsOnUpdate[entityType] = new List<string>();
+        //    }
+        //    _ignoredNavigationsOnUpdate[entityType].Add(propertyName);
+        //}
         internal bool IsNavigationIgnoredOnUpdate(Type entityType, string propertyName)
         {
-            return _ignoredNavigationsOnUpdate.TryGetValue(entityType, out var properties) && properties.Contains(propertyName);
+            return NavigationIgnoreTracker.IgnoredNavigationsOnUpdate.TryGetValue(entityType, out var properties) && properties.Contains(propertyName);
         }
         #endregion
 

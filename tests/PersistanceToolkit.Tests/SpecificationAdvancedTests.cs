@@ -13,14 +13,14 @@ namespace PersistanceToolkit.Tests
 {
     public class SpecificationAdvancedTests : IDisposable
     {
-        private readonly IAggregateRepository<ParentTable> _parentTableRepository;
+        private readonly IAggregateRepository<Parent> _parentTableRepository;
         private readonly ServiceProvider _serviceProvider;
 
         public SpecificationAdvancedTests()
         {
             // Create unique database name for each test class instance
             _serviceProvider = DependencyInjectionSetup.InitializeServiceProvider();
-            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<ParentTable>>();
+            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<Parent>>();
         }
 
         public void Dispose()
@@ -36,10 +36,10 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_NewEntities_Should_Get_CurrentUser_TenantId()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 5; i++)
             {
-                entities.Add(new ParentTable { Title = $"Entity-{i}" });
+                entities.Add(new Parent { Title = $"Entity-{i}" });
             }
 
             // Act
@@ -58,12 +58,13 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_NewEntities_With_Grandchildren_Should_Get_CurrentUser_TenantId()
         {
             // Arrange
-            var parent = new ParentTable { Title = "ParentWithGrandchildren" };
-            var child = new ChildTable { Title = "Child" };
-            var grandChild = new GrandChildTable { Title = "GrandChild" };
+            var parent = new Parent { Title = "ParentWithGrandchildren" };
+            var child = new Child { Title = "Child" };
+
+            var grandChild = new GrandChild { Title = "GrandChild" };
             
-            child.GrandChildTables = new List<GrandChildTable> { grandChild };
-            parent.ChildTables = new List<ChildTable> { child };
+            child.GrandChildren = new List<GrandChild> { grandChild };
+            parent.Children = new List<Child> { child };
 
             // Act
             await _parentTableRepository.Save(parent);
@@ -83,22 +84,22 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_Should_Exclude_SoftDeleted_Entities_By_Default()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 5; i++)
             {
-                var entity = new ParentTable { Title = $"Active-{i}" };
+                var entity = new Parent { Title = $"Active-{i}" };
                 entities.Add(entity);
             }
             for (int i = 0; i < 2; i++)
             {
-                var entity = new ParentTable { Title = $"Deleted-{i}" };
+                var entity = new Parent { Title = $"Deleted-{i}" };
                 entity.MarkAsDeleted(1, System.DateTime.Now);
                 entities.Add(entity);
             }
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
 
             // Assert
@@ -110,22 +111,22 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_Should_Include_SoftDeleted_Entities_When_Requested()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 3; i++)
             {
-                var entity = new ParentTable { Title = $"Active-{i}" };
+                var entity = new Parent { Title = $"Active-{i}" };
                 entities.Add(entity);
             }
             for (int i = 0; i < 2; i++)
             {
-                var entity = new ParentTable { Title = $"Deleted-{i}" };
+                var entity = new Parent { Title = $"Deleted-{i}" };
                 entity.MarkAsDeleted(1, System.DateTime.Now);
                 entities.Add(entity);
             }
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec { IncludeDeletedRecords = true };
+            var spec = new ParentSpec { IncludeDeletedRecords = true };
             var result = await _parentTableRepository.ListAsync(spec);
 
             // Assert
@@ -137,35 +138,35 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_PostProcessing_Should_Remove_Deleted_Entries_From_Aggregates()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "Parent"
             };
-            var activeChild = new ChildTable { Title = "ActiveChild" };
-            var deletedChild = new ChildTable { Title = "DeletedChild" };
+            var activeChild = new Child { Title = "ActiveChild" };
+            var deletedChild = new Child { Title = "DeletedChild" };
             deletedChild.MarkAsDeleted(1, System.DateTime.Now);
-            parent.ChildTables = new List<ChildTable> { activeChild, deletedChild };
+            parent.Children = new List<Child> { activeChild, deletedChild };
             await _parentTableRepository.Save(parent);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedParent = result.FirstOrDefault();
 
             // Assert
             Assert.NotNull(loadedParent);
-            Assert.DoesNotContain(loadedParent.ChildTables, c => c.IsDeleted);
+            Assert.DoesNotContain(loadedParent.Children, c => c.IsDeleted);
         }
 
         [Fact]
         public async Task Specification_PostProcessing_Should_Capture_LoadTimeSnapshot()
         {
             // Arrange
-            var parent = new ParentTable { Title = "SnapshotTest" };
+            var parent = new Parent { Title = "SnapshotTest" };
             await _parentTableRepository.Save(parent);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedParent = result.FirstOrDefault(x => x.Title == "SnapshotTest");
 
@@ -178,10 +179,10 @@ namespace PersistanceToolkit.Tests
         public async Task CustomSpecification_Should_Apply_Custom_Filtering()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 5; i++)
             {
-                entities.Add(new ParentTable { Title = i % 2 == 0 ? "Match" : "NoMatch" });
+                entities.Add(new Parent { Title = i % 2 == 0 ? "Match" : "NoMatch" });
             }
             await _parentTableRepository.SaveRange(entities);
 
@@ -197,52 +198,52 @@ namespace PersistanceToolkit.Tests
         public async Task CustomSpecification_Should_Include_Navigation_Properties()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "ParentWithChildren",
-                ChildTables = new List<ChildTable>
+                Children = new List<Child>
                 {
-                    new ChildTable { Title = "Child1" },
-                    new ChildTable { Title = "Child2" }
+                    new Child { Title = "Child1" },
+                    new Child { Title = "Child2" }
                 }
             };
             await _parentTableRepository.Save(parent);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedParent = result.FirstOrDefault(x => x.Title == "ParentWithChildren");
 
             // Assert
             Assert.NotNull(loadedParent);
-            Assert.NotNull(loadedParent.ChildTables);
-            Assert.Equal(2, loadedParent.ChildTables.Count);
+            Assert.NotNull(loadedParent.Children);
+            Assert.Equal(2, loadedParent.Children.Count);
         }
 
         [Fact]
         public async Task CustomSpecification_Should_Include_Nested_Grandchildren()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "ParentWithGrandchildren",
-                ChildTables = new List<ChildTable>
+                Children = new List<Child>
                 {
-                    new ChildTable 
+                    new Child 
                     { 
                         Title = "Child1",
-                        GrandChildTables = new List<GrandChildTable>
+                        GrandChildren = new List<GrandChild>
                         {
-                            new GrandChildTable { Title = "GrandChild1" },
-                            new GrandChildTable { Title = "GrandChild2" }
+                            new GrandChild { Title = "GrandChild1" },
+                            new GrandChild { Title = "GrandChild2" }
                         }
                     },
-                    new ChildTable 
+                    new Child 
                     { 
                         Title = "Child2",
-                        GrandChildTables = new List<GrandChildTable>
+                        GrandChildren = new List<GrandChild>
                         {
-                            new GrandChildTable { Title = "GrandChild3" }
+                            new GrandChild { Title = "GrandChild3" }
                         }
                     }
                 }
@@ -250,26 +251,26 @@ namespace PersistanceToolkit.Tests
             await _parentTableRepository.Save(parent);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedParent = result.FirstOrDefault(x => x.Title == "ParentWithGrandchildren");
 
             // Assert
             Assert.NotNull(loadedParent);
-            Assert.NotNull(loadedParent.ChildTables);
-            Assert.Equal(2, loadedParent.ChildTables.Count);
+            Assert.NotNull(loadedParent.Children);
+            Assert.Equal(2, loadedParent.Children.Count);
             
-            var child1 = loadedParent.ChildTables.First(c => c.Title == "Child1");
-            var child2 = loadedParent.ChildTables.First(c => c.Title == "Child2");
+            var child1 = loadedParent.Children.First(c => c.Title == "Child1");
+            var child2 = loadedParent.Children.First(c => c.Title == "Child2");
             
-            Assert.NotNull(child1.GrandChildTables);
-            Assert.Equal(2, child1.GrandChildTables.Count);
-            Assert.Contains(child1.GrandChildTables, gc => gc.Title == "GrandChild1");
-            Assert.Contains(child1.GrandChildTables, gc => gc.Title == "GrandChild2");
+            Assert.NotNull(child1.GrandChildren);
+            Assert.Equal(2, child1.GrandChildren.Count);
+            Assert.Contains(child1.GrandChildren, gc => gc.Title == "GrandChild1");
+            Assert.Contains(child1.GrandChildren, gc => gc.Title == "GrandChild2");
             
-            Assert.NotNull(child2.GrandChildTables);
-            Assert.Single(child2.GrandChildTables);
-            Assert.Equal("GrandChild3", child2.GrandChildTables.First().Title);
+            Assert.NotNull(child2.GrandChildren);
+            Assert.Single(child2.GrandChildren);
+            Assert.Equal("GrandChild3", child2.GrandChildren.First().Title);
         }
 
         /// <summary>
@@ -281,11 +282,11 @@ namespace PersistanceToolkit.Tests
         {
             // Arrange
             var entities = Enumerable.Range(0, 25)
-                .Select(i => new ParentTable { Title = $"Parent-{i}" }).ToList();
+                .Select(i => new Parent { Title = $"Parent-{i}" }).ToList();
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var paginated = await _parentTableRepository.PaginatedListAsync(spec, 0, 10);
 
             // Assert
@@ -302,11 +303,11 @@ namespace PersistanceToolkit.Tests
         {
             // Arrange
             var entities = Enumerable.Range(0, 25)
-                .Select(i => new ParentTable { Title = $"Parent-{i}" }).ToList();
+                .Select(i => new Parent { Title = $"Parent-{i}" }).ToList();
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var paginated = await _parentTableRepository.PaginatedListAsync(spec, 10, 10);
 
             // Assert
@@ -322,11 +323,11 @@ namespace PersistanceToolkit.Tests
         {
             // Arrange
             var entities = Enumerable.Range(0, 25)
-                .Select(i => new ParentTable { Title = $"Parent-{i}" }).ToList();
+                .Select(i => new Parent { Title = $"Parent-{i}" }).ToList();
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var firstPage = await _parentTableRepository.PaginatedListAsync(spec, 0, 10);
             var cachedCount = firstPage.TotalCount;
 
@@ -345,11 +346,11 @@ namespace PersistanceToolkit.Tests
         public async Task Pagination_Changing_Filter_Should_Reset_TotalCount_On_FirstPage()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 10; i++)
-                entities.Add(new ParentTable { Title = "A" });
+                entities.Add(new Parent { Title = "A" });
             for (int i = 0; i < 15; i++)
-                entities.Add(new ParentTable { Title = "B" });
+                entities.Add(new Parent { Title = "B" });
             await _parentTableRepository.SaveRange(entities);
 
             // Act
@@ -372,7 +373,7 @@ namespace PersistanceToolkit.Tests
         public async Task Save_NewEntity_Should_Set_TenantId()
         {
             // Arrange
-            var newEntity = new ParentTable { Title = "NewEntity" };
+            var newEntity = new Parent { Title = "NewEntity" };
             Assert.Equal(0, newEntity.Id); // Verify it's a new entity
             Assert.Equal(0, newEntity.TenantId); // Verify no tenant set initially
 
@@ -393,7 +394,7 @@ namespace PersistanceToolkit.Tests
         public async Task Save_ExistingEntity_Should_Not_Overwrite_TenantId()
         {
             // Arrange
-            var originalEntity = new ParentTable { Title = "OriginalEntity" };
+            var originalEntity = new Parent { Title = "OriginalEntity" };
             await _parentTableRepository.Save(originalEntity);
 
             var originalTenantId = originalEntity.TenantId;
@@ -420,15 +421,15 @@ namespace PersistanceToolkit.Tests
         public async Task SaveRange_MixedEntities_Should_Only_Set_TenantId_For_New_Ones()
         {
             // Arrange
-            var existingEntity = new ParentTable { Title = "ExistingEntity" };
+            var existingEntity = new Parent { Title = "ExistingEntity" };
             await _parentTableRepository.Save(existingEntity);
             var originalTenantId = existingEntity.TenantId;
 
-            var newEntity = new ParentTable { Title = "NewEntity" };
+            var newEntity = new Parent { Title = "NewEntity" };
             Assert.Equal(0, newEntity.Id);
             Assert.Equal(0, newEntity.TenantId);
 
-            var entitiesToSave = new List<ParentTable> { existingEntity, newEntity };
+            var entitiesToSave = new List<Parent> { existingEntity, newEntity };
 
             // Act
             var result = await _parentTableRepository.SaveRange(entitiesToSave);
@@ -446,10 +447,10 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_CountAsync_Should_Return_Correct_Count()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 10; i++)
             {
-                entities.Add(new ParentTable { Title = i % 2 == 0 ? "Even" : "Odd" });
+                entities.Add(new Parent { Title = i % 2 == 0 ? "Even" : "Odd" });
             }
             await _parentTableRepository.SaveRange(entities);
 
@@ -465,7 +466,7 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_AnyAsync_Should_Return_True_If_Exists()
         {
             // Arrange
-            var entity = new ParentTable { Title = "UniqueTitle" };
+            var entity = new Parent { Title = "UniqueTitle" };
             await _parentTableRepository.Save(entity);
 
             // Act
@@ -480,10 +481,10 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_SingleOrDefaultAsync_Should_Return_Null_If_Multiple()
         {
             // Arrange
-            var entities = new List<ParentTable>
+            var entities = new List<Parent>
             {
-                new ParentTable { Title = "Duplicate" },
-                new ParentTable { Title = "Duplicate" }
+                new Parent { Title = "Duplicate" },
+                new Parent { Title = "Duplicate" }
             };
             await _parentTableRepository.SaveRange(entities);
 
@@ -496,7 +497,7 @@ namespace PersistanceToolkit.Tests
         }
 
         // Custom specification for filtering by title
-        public class CustomTitleSpec : BaseSpecification<ParentTable>
+        public class CustomTitleSpec : BaseSpecification<Parent>
         {
             public CustomTitleSpec(string title)
             {

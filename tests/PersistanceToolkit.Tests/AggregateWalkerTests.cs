@@ -14,7 +14,7 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Single_Entity_Should_Call_Action()
         {
             // Arrange
-            var entity = new ParentTable { Id = 1, Title = "Test" };
+            var entity = new Parent { Id = 1, Title = "Test" };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -50,8 +50,8 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Single_Child_Should_Traverse_Both()
         {
             // Arrange
-            var child = new ChildTable { Id = 2, Title = "Child" };
-            var parent = new ParentTable { Id = 1, Title = "Parent", IgnoredChild = child };
+            var child = new OneToOneChild { Id = 2, Title = "Child" };
+            var parent = new Parent { Id = 1, Title = "Parent", IgnoredChild = child };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -70,13 +70,13 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Child_Collection_Should_Traverse_All()
         {
             // Arrange
-            var children = new List<ChildTable>
+            var children = new List<Child>
             {
-                new ChildTable { Id = 2, Title = "Child1" },
-                new ChildTable { Id = 3, Title = "Child2" },
-                new ChildTable { Id = 4, Title = "Child3" }
+                new Child { Id = 2, Title = "Child1" },
+                new Child { Id = 3, Title = "Child2" },
+                new Child { Id = 4, Title = "Child3" }
             };
-            var parent = new ParentTable { Id = 1, Title = "Parent", ChildTables = children };
+            var parent = new Parent { Id = 1, Title = "Parent", Children = children };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -95,13 +95,13 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Null_Children_In_Collection_Should_Skip_Nulls()
         {
             // Arrange
-            var children = new List<ChildTable>
+            var children = new List<Child>
             {
-                new ChildTable { Id = 2, Title = "Child1" },
+                new Child { Id = 2, Title = "Child1" },
                 null,
-                new ChildTable { Id = 4, Title = "Child3" }
+                new Child { Id = 4, Title = "Child3" }
             };
-            var parent = new ParentTable { Id = 1, Title = "Parent", ChildTables = children };
+            var parent = new Parent { Id = 1, Title = "Parent", Children = children };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -121,9 +121,9 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Deep_Nesting_Should_Traverse_All_Levels()
         {
             // Arrange
-            var grandChild = new GrandChildTable { Id = 3, Title = "GrandChild" };
-            var child = new ChildTable { Id = 2, Title = "Child", GrandChildTables = new List<GrandChildTable> { grandChild } };
-            var parent = new ParentTable { Id = 1, Title = "Parent", IgnoredChild = child };
+            var grandChild = new GrandChild { Id = 3, Title = "GrandChild" };
+            var child = new OneToOneChild { Id = 2, Title = "Child", GrandChildren = new List<GrandChild> { grandChild } };
+            var parent = new Parent { Id = 1, Title = "Parent", IgnoredChild = child };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -143,12 +143,12 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_IEnumerable_Collection_Should_Traverse_All()
         {
             // Arrange
-            var children = new List<ChildTable>
+            var children = new List<Child>
             {
-                new ChildTable { Id = 2, Title = "Child1" },
-                new ChildTable { Id = 3, Title = "Child2" }
+                new Child { Id = 2, Title = "Child1" },
+                new Child { Id = 3, Title = "Child2" }
             };
-            var parent = new ParentTable { Id = 1, Title = "Parent", ChildTables = children };
+            var parent = new Parent { Id = 1, Title = "Parent", Children = children };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -169,12 +169,12 @@ namespace PersistanceToolkit.Tests
             // Arrange
             var mixedItems = new List<object>
             {
-                new ChildTable { Id = 2, Title = "Child1" },
+                new Child { Id = 2, Title = "Child1" },
                 "String item",
                 42,
-                new ChildTable { Id = 3, Title = "Child2" }
+                new Child { Id = 3, Title = "Child2" }
             };
-            var parent = new ParentTable { Id = 1, Title = "Parent" };
+            var parent = new Parent { Id = 1, Title = "Parent" };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -192,7 +192,7 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Empty_Collection_Should_Only_Traverse_Parent()
         {
             // Arrange
-            var parent = new ParentTable { Id = 1, Title = "Parent", ChildTables = new List<ChildTable>() };
+            var parent = new Parent { Id = 1, Title = "Parent", Children = new List<Child>() };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -210,7 +210,7 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Null_Collection_Should_Only_Traverse_Parent()
         {
             // Arrange
-            var parent = new ParentTable { Id = 1, Title = "Parent", ChildTables = null };
+            var parent = new Parent { Id = 1, Title = "Parent", Children = null };
             var visitedEntities = new List<Entity>();
 
             // Act
@@ -228,19 +228,19 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Complex_Nested_Structure_Should_Traverse_All()
         {
             // Arrange
-            var grandChild1 = new GrandChildTable { Id = 4, Title = "GrandChild1" };
-            var grandChild2 = new GrandChildTable { Id = 5, Title = "GrandChild2" };
-            var grandChild3 = new GrandChildTable { Id = 6, Title = "GrandChild3" };
+            var grandChild1 = new GrandChild { Id = 4, Title = "GrandChild1" };
+            var grandChild2 = new GrandChild { Id = 5, Title = "GrandChild2" };
+            var grandChild3 = new GrandChild { Id = 6, Title = "GrandChild3" };
             
-            var child1 = new ChildTable { Id = 2, Title = "Child1", GrandChildTables = new List<GrandChildTable> { grandChild1 } };
-            var child2 = new ChildTable { Id = 3, Title = "Child2", GrandChildTables = new List<GrandChildTable> { grandChild2, grandChild3 } };
+            var child1 = new OneToOneChild { Id = 2, Title = "Child1", GrandChildren = new List<GrandChild> { grandChild1 } };
+            var child2 = new Child { Id = 3, Title = "Child2", GrandChildren = new List<GrandChild> { grandChild2, grandChild3 } };
             
-            var parent = new ParentTable 
+            var parent = new Parent 
             { 
                 Id = 1, 
                 Title = "Parent", 
                 IgnoredChild = child1,
-                ChildTables = new List<ChildTable> { child2 }
+                Children = new List<Child> { child2 }
             };
             
             var visitedEntities = new List<Entity>();
@@ -265,8 +265,8 @@ namespace PersistanceToolkit.Tests
         public void TraverseEntities_With_Circular_Reference_Should_Not_StackOverflow()
         {
             // Arrange
-            var entity1 = new ParentTable { Id = 1, Title = "Entity1" };
-            var entity2 = new ChildTable { Id = 2, Title = "Entity2" };
+            var entity1 = new Parent { Id = 1, Title = "Entity1" };
+            var entity2 = new OneToOneChild { Id = 2, Title = "Entity2" };
             
             // Create circular reference through IgnoredChild
             entity1.IgnoredChild = entity2;

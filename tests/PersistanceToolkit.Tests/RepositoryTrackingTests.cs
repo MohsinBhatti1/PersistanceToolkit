@@ -15,13 +15,13 @@ namespace PersistanceToolkit.Tests
 {
     public class RepositoryTrackingTests : IDisposable
     {
-        private readonly IAggregateRepository<ParentTable> _parentTableRepository;
+        private readonly IAggregateRepository<Parent> _parentTableRepository;
         private readonly ServiceProvider _serviceProvider;
 
         public RepositoryTrackingTests()
         {
             _serviceProvider = DependencyInjectionSetup.InitializeServiceProvider();
-            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<ParentTable>>();
+            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<Parent>>();
         }
 
         public void Dispose()
@@ -37,11 +37,11 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_Queries_Should_Use_AsNoTracking()
         {
             // Arrange
-            var entity = new ParentTable { Title = "TrackingTest" };
+            var entity = new Parent { Title = "TrackingTest" };
             await _parentTableRepository.Save(entity);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedEntity = result.FirstOrDefault();
 
@@ -66,7 +66,7 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_Should_Be_Detached_After_SaveChanges()
         {
             // Arrange
-            var entity = new ParentTable { Title = "DetachTest" };
+            var entity = new Parent { Title = "DetachTest" };
 
             // Act
             var result = await _parentTableRepository.Save(entity);
@@ -91,11 +91,11 @@ namespace PersistanceToolkit.Tests
         public async Task Multiple_Entities_Should_Be_Detached_After_SaveRange()
         {
             // Arrange
-            var entities = new List<ParentTable>
+            var entities = new List<Parent>
             {
-                new ParentTable { Title = "Entity1" },
-                new ParentTable { Title = "Entity2" },
-                new ParentTable { Title = "Entity3" }
+                new Parent { Title = "Entity1" },
+                new Parent { Title = "Entity2" },
+                new Parent { Title = "Entity3" }
             };
 
             // Act
@@ -125,7 +125,7 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_Should_Be_Detached_After_Delete()
         {
             // Arrange
-            var entity = new ParentTable { Title = "DeleteTest" };
+            var entity = new Parent { Title = "DeleteTest" };
             await _parentTableRepository.Save(entity);
 
             // Act
@@ -151,10 +151,10 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_Should_Be_Detached_After_DeleteRange()
         {
             // Arrange
-            var entities = new List<ParentTable>
+            var entities = new List<Parent>
             {
-                new ParentTable { Title = "DeleteRange1" },
-                new ParentTable { Title = "DeleteRange2" }
+                new Parent { Title = "DeleteRange1" },
+                new Parent { Title = "DeleteRange2" }
             };
             await _parentTableRepository.SaveRange(entities);
 
@@ -185,10 +185,10 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_Should_Be_Detached_After_DeleteBySpecification()
         {
             // Arrange
-            var entities = new List<ParentTable>
+            var entities = new List<Parent>
             {
-                new ParentTable { Title = "DeleteSpec1" },
-                new ParentTable { Title = "DeleteSpec2" }
+                new Parent { Title = "DeleteSpec1" },
+                new Parent { Title = "DeleteSpec2" }
             };
             await _parentTableRepository.SaveRange(entities);
 
@@ -222,7 +222,7 @@ namespace PersistanceToolkit.Tests
         public async Task ChangeTracker_Should_Be_Cleared_After_SaveChanges()
         {
             // Arrange
-            var entity = new ParentTable { Title = "ChangeTrackerTest" };
+            var entity = new Parent { Title = "ChangeTrackerTest" };
 
             // Act
             await _parentTableRepository.Save(entity);
@@ -243,13 +243,13 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_With_Navigation_Properties_Should_Be_Detached()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "ParentWithChildren",
-                ChildTables = new List<ChildTable>
+                Children = new List<Child>
                 {
-                    new ChildTable { Title = "Child1" },
-                    new ChildTable { Title = "Child2" }
+                    new Child { Title = "Child1" },
+                    new Child { Title = "Child2" }
                 }
             };
 
@@ -270,7 +270,7 @@ namespace PersistanceToolkit.Tests
             Assert.Equal(EntityState.Detached, parentEntry.State);
             
             // Verify children are detached
-            foreach (var child in parent.ChildTables)
+            foreach (var child in parent.Children)
             {
                 var childEntry = context.Entry(child);
                 Assert.Equal(EntityState.Detached, childEntry.State);
@@ -284,26 +284,26 @@ namespace PersistanceToolkit.Tests
         public async Task Entities_With_Grandchildren_Should_Be_Detached()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "ParentWithGrandchildren",
-                ChildTables = new List<ChildTable>
+                Children = new List<Child>
                 {
-                    new ChildTable 
+                    new Child 
                     { 
                         Title = "Child1",
-                        GrandChildTables = new List<GrandChildTable>
+                        GrandChildren = new List<GrandChild>
                         {
-                            new GrandChildTable { Title = "GrandChild1" },
-                            new GrandChildTable { Title = "GrandChild2" }
+                            new GrandChild { Title = "GrandChild1" },
+                            new GrandChild { Title = "GrandChild2" }
                         }
                     },
-                    new ChildTable 
+                    new Child 
                     { 
                         Title = "Child2",
-                        GrandChildTables = new List<GrandChildTable>
+                        GrandChildren = new List<GrandChild>
                         {
-                            new GrandChildTable { Title = "GrandChild3" }
+                            new GrandChild { Title = "GrandChild3" }
                         }
                     }
                 }
@@ -326,15 +326,15 @@ namespace PersistanceToolkit.Tests
             Assert.Equal(EntityState.Detached, parentEntry.State);
             
             // Verify children are detached
-            foreach (var child in parent.ChildTables)
+            foreach (var child in parent.Children)
             {
                 var childEntry = context.Entry(child);
                 Assert.Equal(EntityState.Detached, childEntry.State);
                 
                 // Verify grandchildren are detached
-                if (child.GrandChildTables != null)
+                if (child.GrandChildren != null)
                 {
-                    foreach (var grandChild in child.GrandChildTables)
+                    foreach (var grandChild in child.GrandChildren)
                     {
                         var grandChildEntry = context.Entry(grandChild);
                         Assert.Equal(EntityState.Detached, grandChildEntry.State);
@@ -350,11 +350,11 @@ namespace PersistanceToolkit.Tests
         public async Task Multiple_Queries_Should_Not_Cause_Tracking_Issues()
         {
             // Arrange
-            var entity = new ParentTable { Title = "MultipleQueries" };
+            var entity = new Parent { Title = "MultipleQueries" };
             await _parentTableRepository.Save(entity);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result1 = await _parentTableRepository.ListAsync(spec);
             var result2 = await _parentTableRepository.ListAsync(spec);
             var result3 = await _parentTableRepository.ListAsync(spec);
@@ -380,15 +380,15 @@ namespace PersistanceToolkit.Tests
         public async Task Pagination_Queries_Should_Use_AsNoTracking()
         {
             // Arrange
-            var entities = new List<ParentTable>();
+            var entities = new List<Parent>();
             for (int i = 0; i < 10; i++)
             {
-                entities.Add(new ParentTable { Title = $"PaginationTest{i}" });
+                entities.Add(new Parent { Title = $"PaginationTest{i}" });
             }
             await _parentTableRepository.SaveRange(entities);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var paginatedResult = await _parentTableRepository.PaginatedListAsync(spec, 0, 5);
 
             // Assert
@@ -409,7 +409,7 @@ namespace PersistanceToolkit.Tests
         }
 
         // Custom specification for testing
-        public class CustomTitleSpec : BaseSpecification<ParentTable>
+        public class CustomTitleSpec : BaseSpecification<Parent>
         {
             public CustomTitleSpec(string title)
             {

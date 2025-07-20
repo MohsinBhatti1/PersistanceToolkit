@@ -14,13 +14,13 @@ namespace PersistanceToolkit.Tests
 {
     public class LoadTimeSnapshotTests : IDisposable
     {
-        private readonly IAggregateRepository<ParentTable> _parentTableRepository;
+        private readonly IAggregateRepository<Parent> _parentTableRepository;
         private readonly ServiceProvider _serviceProvider;
 
         public LoadTimeSnapshotTests()
         {
             _serviceProvider = DependencyInjectionSetup.InitializeServiceProvider();
-            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<ParentTable>>();
+            _parentTableRepository = _serviceProvider.GetService<IAggregateRepository<Parent>>();
         }
 
         public void Dispose()
@@ -37,7 +37,7 @@ namespace PersistanceToolkit.Tests
         public async Task CaptureLoadTimeSnapshot_Should_Set_Snapshot_And_Reset_Changes()
         {
             // Arrange
-            var entity = new ParentTable { Title = "SnapshotTest" };
+            var entity = new Parent { Title = "SnapshotTest" };
 
             // Act
             entity.CaptureLoadTimeSnapshot();
@@ -53,7 +53,7 @@ namespace PersistanceToolkit.Tests
         public async Task Modifying_Entity_After_Snapshot_Should_Detect_Changes()
         {
             // Arrange
-            var entity = new ParentTable { Title = "OriginalTitle" };
+            var entity = new Parent { Title = "OriginalTitle" };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
@@ -70,7 +70,7 @@ namespace PersistanceToolkit.Tests
         public async Task Save_Should_Automatically_Capture_Snapshot()
         {
             // Arrange
-            var entity = new ParentTable { Title = "AutoSnapshot" };
+            var entity = new Parent { Title = "AutoSnapshot" };
 
             // Act
             await _parentTableRepository.Save(entity);
@@ -86,11 +86,11 @@ namespace PersistanceToolkit.Tests
         public async Task Load_From_Database_Should_Capture_Snapshot()
         {
             // Arrange
-            var entity = new ParentTable { Title = "LoadSnapshot" };
+            var entity = new Parent { Title = "LoadSnapshot" };
             await _parentTableRepository.Save(entity);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var loadedEntity = await _parentTableRepository.FirstOrDefaultAsync(spec);
 
             // Assert
@@ -105,10 +105,10 @@ namespace PersistanceToolkit.Tests
         public async Task Modifying_Loaded_Entity_Should_Detect_Changes()
         {
             // Arrange
-            var entity = new ParentTable { Title = "LoadAndModify" };
+            var entity = new Parent { Title = "LoadAndModify" };
             await _parentTableRepository.Save(entity);
 
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var loadedEntity = await _parentTableRepository.FirstOrDefaultAsync(spec);
 
             // Act
@@ -125,10 +125,10 @@ namespace PersistanceToolkit.Tests
         public async Task Save_Modified_Entity_Should_Reset_Change_Detection()
         {
             // Arrange
-            var entity = new ParentTable { Title = "OriginalTitle" };
+            var entity = new Parent { Title = "OriginalTitle" };
             await _parentTableRepository.Save(entity);
 
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var loadedEntity = await _parentTableRepository.FirstOrDefaultAsync(spec);
             loadedEntity.Title = "ModifiedTitle";
 
@@ -146,12 +146,12 @@ namespace PersistanceToolkit.Tests
         public async Task Multiple_Property_Changes_Should_Be_Detected()
         {
             // Arrange
-            var entity = new ParentTable { Title = "MultipleChanges" };
+            var entity = new Parent { Title = "MultipleChanges" };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
             entity.Title = "ChangedTitle";
-            entity.ChildTables = new List<ChildTable> { new ChildTable { Title = "Child" } };
+            entity.Children = new List<Child> { new Child { Title = "Child" } };
 
             // Assert
             Assert.True(entity.HasChange());
@@ -164,17 +164,17 @@ namespace PersistanceToolkit.Tests
         public async Task Nested_Entity_Changes_Should_Be_Detected()
         {
             // Arrange
-            var parent = new ParentTable { Title = "Parent" };
-            var child = new ChildTable { Title = "Child" };
-            parent.ChildTables = new List<ChildTable> { child };
+            var parent = new Parent { Title = "Parent" };
+            var child = new Child { Title = "Child" };
+            parent.Children = new List<Child> { child };
 
             await _parentTableRepository.Save(parent);
 
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var loadedParent = await _parentTableRepository.FirstOrDefaultAsync(spec);
 
             // Act
-            loadedParent.ChildTables.First().Title = "ModifiedChild";
+            loadedParent.Children.First().Title = "ModifiedChild";
 
             // Assert
             Assert.True(loadedParent.HasChange());
@@ -187,20 +187,20 @@ namespace PersistanceToolkit.Tests
         public async Task Deeply_Nested_Grandchild_Changes_Should_Be_Detected()
         {
             // Arrange
-            var parent = new ParentTable { Title = "Parent" };
-            var child = new ChildTable { Title = "Child" };
-            var grandChild = new GrandChildTable { Title = "GrandChild" };
+            var parent = new Parent { Title = "Parent" };
+            var child = new Child { Title = "Child" };
+            var grandChild = new GrandChild { Title = "GrandChild" };
             
-            child.GrandChildTables = new List<GrandChildTable> { grandChild };
-            parent.ChildTables = new List<ChildTable> { child };
+            child.GrandChildren = new List<GrandChild> { grandChild };
+            parent.Children = new List<Child> { child };
 
             await _parentTableRepository.Save(parent);
 
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var loadedParent = await _parentTableRepository.FirstOrDefaultAsync(spec);
 
             // Act
-            loadedParent.ChildTables.First().GrandChildTables.First().Title = "ModifiedGrandChild";
+            loadedParent.Children.First().GrandChildren.First().Title = "ModifiedGrandChild";
 
             // Assert
             Assert.True(loadedParent.HasChange());
@@ -213,7 +213,7 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Capture_Exact_State()
         {
             // Arrange
-            var entity = new ParentTable { Title = "ExactState" };
+            var entity = new Parent { Title = "ExactState" };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
@@ -234,13 +234,13 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Work_With_Complex_Objects()
         {
             // Arrange
-            var parent = new ParentTable
+            var parent = new Parent
             {
                 Title = "ComplexParent",
-                ChildTables = new List<ChildTable>
+                Children = new List<Child>
                 {
-                    new ChildTable { Title = "Child1" },
-                    new ChildTable { Title = "Child2" }
+                    new Child { Title = "Child1" },
+                    new Child { Title = "Child2" }
                 }
             };
 
@@ -248,7 +248,7 @@ namespace PersistanceToolkit.Tests
             parent.CaptureLoadTimeSnapshot();
             var hasChangeInitially = parent.HasChange();
 
-            parent.ChildTables.Add(new ChildTable { Title = "Child3" });
+            parent.Children.Add(new Child { Title = "Child3" });
 
             // Assert
             Assert.False(hasChangeInitially);
@@ -262,7 +262,7 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Handle_Special_Characters()
         {
             // Arrange
-            var entity = new ParentTable { Title = "Special\"Chars\n\t\r" };
+            var entity = new Parent { Title = "Special\"Chars\n\t\r" };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
@@ -280,7 +280,7 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Work_With_Null_Values()
         {
             // Arrange
-            var entity = new ParentTable { Title = null };
+            var entity = new Parent { Title = null };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
@@ -298,15 +298,15 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Work_With_Empty_Collections()
         {
             // Arrange
-            var entity = new ParentTable
+            var entity = new Parent
             {
                 Title = "EmptyCollection",
-                ChildTables = new List<ChildTable>()
+                Children = new List<Child>()
             };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
-            entity.ChildTables.Add(new ChildTable { Title = "NewChild" });
+            entity.Children.Add(new Child { Title = "NewChild" });
             var hasChange = entity.HasChange();
 
             // Assert
@@ -320,11 +320,11 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Should_Be_Captured_For_All_Entities_In_Collection()
         {
             // Arrange
-            var entities = new List<ParentTable>
+            var entities = new List<Parent>
             {
-                new ParentTable { Title = "Entity1" },
-                new ParentTable { Title = "Entity2" },
-                new ParentTable { Title = "Entity3" }
+                new Parent { Title = "Entity1" },
+                new Parent { Title = "Entity2" },
+                new Parent { Title = "Entity3" }
             };
 
             // Act
@@ -344,11 +344,11 @@ namespace PersistanceToolkit.Tests
         public async Task Specification_PostProcessing_Should_Capture_Snapshot()
         {
             // Arrange
-            var entity = new ParentTable { Title = "PostProcessing" };
+            var entity = new Parent { Title = "PostProcessing" };
             await _parentTableRepository.Save(entity);
 
             // Act
-            var spec = new ParentTableSpec();
+            var spec = new ParentSpec();
             var result = await _parentTableRepository.ListAsync(spec);
             var loadedEntity = result.FirstOrDefault();
 
@@ -364,7 +364,7 @@ namespace PersistanceToolkit.Tests
         public async Task Snapshot_Comparison_Should_Be_Case_Sensitive()
         {
             // Arrange
-            var entity = new ParentTable { Title = "CaseSensitive" };
+            var entity = new Parent { Title = "CaseSensitive" };
             entity.CaptureLoadTimeSnapshot();
 
             // Act
@@ -378,12 +378,12 @@ namespace PersistanceToolkit.Tests
 
 
         // Custom specification for testing
-        public class ParentTableSpec : BaseSpecification<ParentTable>
+        public class ParentSpec : BaseSpecification<Parent>
         {
-            public ParentTableSpec()
+            public ParentSpec()
             {
-                Query.Include(c => c.ChildTables)
-                     .ThenInclude(child => child.GrandChildTables);
+                Query.Include(c => c.Children)
+                     .ThenInclude(child => child.GrandChildren);
             }
         }
     }

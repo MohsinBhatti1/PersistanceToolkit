@@ -43,7 +43,7 @@ namespace PersistanceToolkit.Tests.Initializers
         }
         private static SystemContext CreateDBContext()
         {
-            return new SystemContext("Data Source=10.4.0.8;Initial Catalog=iCM_Prod_Eagle;user id =mnaeem; password=Mnb@312419;TrustServerCertificate=True;");
+            return new SystemContext("Data Source=MOHSIN-PC\\SQLEXPRESS;Initial Catalog=TEST;Integrated Security=True;TrustServerCertificate=True;");
         }
     }
 }

@@ -2,22 +2,22 @@
 {
     internal static class NavigationIgnoreTracker
     {
-        private static readonly Dictionary<Type, List<string>> _pendingIgnores = new();
+        internal static readonly Dictionary<Type, List<string>> IgnoredNavigationsOnUpdate = new();
 
         internal static void MarkIgnored<T>(string propertyName)
         {
             var type = typeof(T);
-            if (!_pendingIgnores.ContainsKey(type))
-                _pendingIgnores[type] = new List<string>();
+            if (!IgnoredNavigationsOnUpdate.ContainsKey(type))
+                IgnoredNavigationsOnUpdate[type] = new List<string>();
 
-            _pendingIgnores[type].Add(propertyName);
+            IgnoredNavigationsOnUpdate[type].Add(propertyName);
         }
 
-        internal static Dictionary<Type, List<string>> CollectAndReset()
-        {
-            var copy = new Dictionary<Type, List<string>>(_pendingIgnores);
-            _pendingIgnores.Clear();
-            return copy;
-        }
+        //internal static Dictionary<Type, List<string>> CollectAndReset()
+        //{
+        //    var copy = new Dictionary<Type, List<string>>(IgnoredNavigationsOnUpdate);
+        //    IgnoredNavigationsOnUpdate.Clear();
+        //    return copy;
+        //}
     }
 }

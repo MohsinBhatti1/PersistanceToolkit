@@ -7,7 +7,7 @@ namespace PersistanceToolkit.Tests.Initializers
 {
     public class PTKTestFixture : IDisposable
     {
-        public IAggregateRepository<ParentTable> ParentTableRepository;
+        public IAggregateRepository<Parent> ParentTableRepository;
         public IAggregateRepository<User> UserRepository;
         public SystemContext SystemContext;
         public PTKTestFixture()
@@ -16,7 +16,7 @@ namespace PersistanceToolkit.Tests.Initializers
 
             SystemContext = serviceProvider.GetService<SystemContext>();
             var systemUser = serviceProvider.GetService<ISystemUser>();
-            ParentTableRepository = serviceProvider.GetService<IAggregateRepository<ParentTable>>();
+            ParentTableRepository = serviceProvider.GetService<IAggregateRepository<Parent>>();
             UserRepository = serviceProvider.GetService<IAggregateRepository<User>>();
         }
         public void Dispose()
