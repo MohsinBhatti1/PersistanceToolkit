@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersistanceToolkit.Domain;
+using PersistanceToolkit.Tests.Entities;
 using PersistanceToolkit.Tests.Initializers;
 using PersistanceToolKit.Persistence.Persistance;
 using System;

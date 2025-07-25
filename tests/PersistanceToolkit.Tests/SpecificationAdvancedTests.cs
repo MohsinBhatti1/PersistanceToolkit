@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using System;
+using PersistanceToolkit.Tests.Entities;
+using PersistanceToolkit.Tests.Specifications;
 
 namespace PersistanceToolkit.Tests
 {

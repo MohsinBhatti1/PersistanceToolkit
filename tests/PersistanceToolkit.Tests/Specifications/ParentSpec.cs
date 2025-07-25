@@ -1,7 +1,8 @@
 using Ardalis.Specification;
 using PersistanceToolkit.Abstractions.Specifications;
+using PersistanceToolkit.Tests.Entities;
 
-namespace PersistanceToolkit.Tests
+namespace PersistanceToolkit.Tests.Specifications
 {
     public class ParentSpec : BaseSpecification<Parent>
     {

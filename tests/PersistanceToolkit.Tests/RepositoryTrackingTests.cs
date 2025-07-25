@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Xunit;
 using System;
 using PersistanceToolKit.Persistence.Persistance;
+using PersistanceToolkit.Tests.Entities;
+using PersistanceToolkit.Tests.Specifications;
 
 namespace PersistanceToolkit.Tests
 {

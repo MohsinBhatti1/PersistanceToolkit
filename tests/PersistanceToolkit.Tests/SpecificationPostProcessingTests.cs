@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using System;
 using Ardalis.Specification;
+using PersistanceToolkit.Tests.Entities;
 
 namespace PersistanceToolkit.Tests
 {

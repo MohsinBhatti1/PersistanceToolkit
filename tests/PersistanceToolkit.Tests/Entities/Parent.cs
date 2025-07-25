@@ -1,7 +1,7 @@
 using PersistanceToolkit.Domain;
 using System.Collections.Generic;
 
-namespace PersistanceToolkit.Tests
+namespace PersistanceToolkit.Tests.Entities
 {
     public class Parent : Entity, IAggregateRoot
     {

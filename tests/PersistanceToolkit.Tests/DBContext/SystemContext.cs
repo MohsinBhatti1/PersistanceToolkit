@@ -1,6 +1,7 @@
-namespace PersistanceToolkit.Tests
+namespace PersistanceToolkit.Tests.DBContext
 {
     using Microsoft.EntityFrameworkCore;
+    using PersistanceToolkit.Tests.Entities;
     using PersistanceToolKit.Persistence.Persistance;
 
     public class SystemContext : BaseContext

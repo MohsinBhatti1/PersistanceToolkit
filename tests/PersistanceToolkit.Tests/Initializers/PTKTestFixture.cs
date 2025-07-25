@@ -2,6 +2,8 @@
 using PersistanceToolkit.Abstractions;
 using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolkit.Repositories;
+using PersistanceToolkit.Tests.DBContext;
+using PersistanceToolkit.Tests.Entities;
 
 namespace PersistanceToolkit.Tests.Initializers
 {
