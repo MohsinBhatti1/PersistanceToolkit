@@ -3,7 +3,7 @@ using PersistanceToolkit.Domain;
 
 namespace PersistanceToolkit.Abstractions.Repositories
 {
-    public interface IAggregateReadRepository<T> : IEntityReadRepository<T> where T : Entity
+    public interface IAggregateReadRepository<T> : IEntityReadRepository<T> where T : Entity, IAggregateRoot
     {
     }
     public interface IAggregateRepository<T> : IAggregateReadRepository<T> where T : Entity, IAggregateRoot
