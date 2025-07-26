@@ -1,7 +1,7 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Domain;
+﻿using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions.Repositories
+namespace PersistenceToolkit.Abstractions.Repositories
 {
     public interface IAggregateReadRepository<T> : IEntityReadRepository<T> where T : Entity, IAggregateRoot
     {

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 public class IncludeEvaluator : IEvaluator
 {

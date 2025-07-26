@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 
 /// <summary>
 /// Whether to (subsequently) sort ascending or descending.

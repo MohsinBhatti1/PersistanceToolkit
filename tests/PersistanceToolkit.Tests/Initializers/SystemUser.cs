@@ -1,11 +1,11 @@
-﻿using PersistanceToolkit.Abstractions;
+﻿using PersistenceToolkit.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PersistanceToolkit.Tests.Initializers
+namespace PersistenceToolkit.Tests.Initializers
 {
     public class SystemUser : ISystemUser
     {

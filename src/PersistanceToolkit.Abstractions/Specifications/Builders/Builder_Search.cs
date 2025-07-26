@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 public static partial class SpecificationBuilderExtensions
 {
     // TODO: Improve the nullability for the key selector. Update everything to work with Func<T, string?>. [Fati Iseni, 27/02/2025]

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PersistanceToolkit.Abstractions.Specifications;
+namespace PersistenceToolkit.Abstractions.Specifications;
 
 public class SearchMemoryEvaluator : IInMemoryEvaluator
 {

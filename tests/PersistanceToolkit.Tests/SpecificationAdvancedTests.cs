@@ -1,16 +1,16 @@
 using Microsoft.Extensions.DependencyInjection;
-using PersistanceToolkit.Abstractions.Repositories;
-using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Tests.Initializers;
+using PersistenceToolkit.Abstractions.Repositories;
+using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Tests.Initializers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using System;
-using PersistanceToolkit.Tests.Entities;
-using PersistanceToolkit.Tests.Specifications;
+using PersistenceToolkit.Tests.Entities;
+using PersistenceToolkit.Tests.Specifications;
 
-namespace PersistanceToolkit.Tests
+namespace PersistenceToolkit.Tests
 {
     public class SpecificationAdvancedTests : IDisposable
     {

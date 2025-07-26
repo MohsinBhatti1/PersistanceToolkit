@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace PersistanceToolkit.Domain
+namespace PersistenceToolkit.Domain
 {
     public static class Extensions
     {

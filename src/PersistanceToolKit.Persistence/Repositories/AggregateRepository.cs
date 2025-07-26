@@ -1,9 +1,9 @@
-﻿using PersistanceToolkit.Abstractions;
-using PersistanceToolkit.Abstractions.Repositories;
-using PersistanceToolkit.Domain;
-using PersistanceToolKit.Persistence.Persistance;
+﻿using PersistenceToolkit.Abstractions;
+using PersistenceToolkit.Abstractions.Repositories;
+using PersistenceToolkit.Domain;
+using PersistenceToolkit.Persistence.Persistance;
 
-namespace PersistanceToolkit.Repositories
+namespace PersistenceToolkit.Repositories
 {
     public class AggregateRepository<T> : EntityRepository<T>, IAggregateRepository<T> where T : Entity, IAggregateRoot
     {

@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 
 internal struct OneOrMany<T> where T : class
 {

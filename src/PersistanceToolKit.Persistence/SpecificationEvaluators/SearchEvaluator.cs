@@ -1,7 +1,7 @@
-﻿using PersistanceToolkit.Persistence.SpecificationEvaluators;
+﻿using PersistenceToolkit.Persistence.SpecificationEvaluators;
 using System.Runtime.InteropServices;
 
-namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 public class SearchEvaluator : IEvaluator
 {

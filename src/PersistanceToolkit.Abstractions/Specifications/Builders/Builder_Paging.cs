@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 
 public static partial class SpecificationBuilderExtensions
 {

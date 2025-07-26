@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace PersistanceToolkit.Abstractions.Specifications;
+namespace PersistenceToolkit.Abstractions.Specifications;
 
 public static class SearchExtension
 {

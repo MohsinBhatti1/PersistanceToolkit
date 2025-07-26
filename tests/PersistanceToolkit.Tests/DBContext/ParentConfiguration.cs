@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PersistanceToolkit.Tests.Entities;
-using PersistanceToolKit.Persistence.Configuration;
-using PersistanceToolKit.Persistence.Persistance;
+using PersistenceToolkit.Tests.Entities;
+using PersistenceToolkit.Persistence.Configuration;
+using PersistenceToolkit.Persistence.Persistance;
 
-namespace PersistanceToolkit.Tests.DBContext
+namespace PersistenceToolkit.Tests.DBContext
 {
     public class ParentConfiguration : BaseConfiguration<Parent>
     {

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 public static class SearchExtension
 {

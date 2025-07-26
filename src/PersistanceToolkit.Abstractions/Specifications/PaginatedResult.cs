@@ -1,11 +1,11 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
+﻿using PersistenceToolkit.Abstractions.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PersistanceToolkit.Abstractions.Specifications
+namespace PersistenceToolkit.Abstractions.Specifications
 {
     public class PaginatedResult<TResult>
     {

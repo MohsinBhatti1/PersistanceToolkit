@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 public interface IIncludableSpecificationBuilder<T, TResult, out TProperty>
     : ISpecificationBuilder<T, TResult>, IIncludableSpecificationBuilder<T, TProperty> where T : class
 {

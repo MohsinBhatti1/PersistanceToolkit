@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PersistanceToolkit.Domain;
-using PersistanceToolkit.Tests.Entities;
-using PersistanceToolkit.Tests.Initializers;
-using PersistanceToolKit.Persistence.Persistance;
+using PersistenceToolkit.Domain;
+using PersistenceToolkit.Tests.Entities;
+using PersistenceToolkit.Tests.Initializers;
+using PersistenceToolkit.Persistence.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace PersistanceToolkit.Tests
+namespace PersistenceToolkit.Tests
 {
     public class EntityStateProcessorTests : IDisposable
     {

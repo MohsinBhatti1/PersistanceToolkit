@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PersistanceToolkit.Domain;
+using PersistenceToolkit.Domain;
 
-namespace PersistanceToolKit.Persistence.Configuration
+namespace PersistenceToolkit.Persistence.Configuration
 {
     public abstract class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : Entity
     {

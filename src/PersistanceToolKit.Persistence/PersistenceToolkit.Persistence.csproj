@@ -3,10 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
 
     <!-- NuGet package metadata -->
-    <PackageId>PersistenceToolkit.Abstractions</PackageId>
+    <PackageId>PersistenceToolkit</PackageId>
     <Version>10.0.0</Version>
     <Authors>MohsinBhatti</Authors>
     <Company>MBDevForce</Company>
@@ -26,10 +25,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PersistanceToolkit.Domain\PersistanceToolkit.Domain.csproj" />
+    <Compile Remove="Persistance\EntityAuditLogSetter.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="PersistanceToolkit.Persistence" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PersistanceToolkit.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersistanceToolkit.Abstractions\PersistenceToolkit.Abstractions.csproj" />
   </ItemGroup>
 </Project>

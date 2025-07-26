@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using PersistanceToolKit.Persistence.Helpers;
+using PersistenceToolkit.Persistence.Helpers;
 using System.Linq.Expressions;
-namespace PersistanceToolKit.Persistence.Persistance
+namespace PersistenceToolkit.Persistence.Persistance
 {
 
     public abstract class BaseContext : DbContext

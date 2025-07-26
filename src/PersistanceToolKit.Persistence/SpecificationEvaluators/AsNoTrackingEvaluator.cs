@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+﻿namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 public class AsNoTrackingEvaluator : IEvaluator
 {

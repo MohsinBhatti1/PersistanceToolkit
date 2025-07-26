@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersistanceToolkit.Abstractions;
-using PersistanceToolkit.Abstractions.Repositories;
-using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Domain;
-using PersistanceToolKit.Persistence.Persistance;
+using PersistenceToolkit.Abstractions;
+using PersistenceToolkit.Abstractions.Repositories;
+using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Domain;
+using PersistenceToolkit.Persistence.Persistance;
 
-namespace PersistanceToolkit.Repositories
+namespace PersistenceToolkit.Repositories
 {
     public class EntityRepository<T> : GenericRepository<T>, IEntityReadRepository<T> where T : Entity
     {

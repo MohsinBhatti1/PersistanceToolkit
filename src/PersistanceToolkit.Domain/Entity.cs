@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace PersistanceToolkit.Domain
+namespace PersistenceToolkit.Domain
 {
     public abstract class Entity
     {

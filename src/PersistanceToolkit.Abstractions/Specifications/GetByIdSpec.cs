@@ -1,7 +1,7 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Domain;
+﻿using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions.Specifications
+namespace PersistenceToolkit.Abstractions.Specifications
 {
     public class GetByIdSpecification<T> : EntitySpecification<T>
         where T : Entity

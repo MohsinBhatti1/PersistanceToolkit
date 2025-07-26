@@ -1,6 +1,6 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
+﻿using PersistenceToolkit.Abstractions.Specifications;
 
-namespace PersistanceToolkit.Abstractions.Repositories
+namespace PersistenceToolkit.Abstractions.Repositories
 {
     public interface IGenericReadRepository<T> where T : class
     {

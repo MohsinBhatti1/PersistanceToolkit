@@ -1,9 +1,9 @@
-﻿using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Domain;
+﻿using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Domain;
 using System.Reflection;
 using System;
 
-namespace PersistanceToolkit.Abstractions.Specifications
+namespace PersistenceToolkit.Abstractions.Specifications
 {
     public abstract class EntitySpecification<T> : Specification<T>
         where T : Entity

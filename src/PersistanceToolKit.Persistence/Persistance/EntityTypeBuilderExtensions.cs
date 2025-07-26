@@ -1,7 +1,7 @@
-﻿namespace PersistanceToolKit.Persistence.Persistance
+﻿namespace PersistenceToolkit.Persistence.Persistance
 {
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using PersistanceToolKit.Persistence.Helpers;
+    using PersistenceToolkit.Persistence.Helpers;
     using System.Linq.Expressions;
 
     public static class EntityTypeBuilderExtensions

@@ -1,6 +1,6 @@
-﻿using PersistanceToolkit.Domain;
+﻿using PersistenceToolkit.Domain;
 
-namespace PersistanceToolkit.Abstractions.Repositories
+namespace PersistenceToolkit.Abstractions.Repositories
 {
     public interface IEntityReadRepository<T> : IGenericReadRepository<T> where T : Entity
     {

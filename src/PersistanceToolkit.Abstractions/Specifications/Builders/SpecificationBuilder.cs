@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 
 public interface ICacheSpecificationBuilder<T, TResult>
     : ISpecificationBuilder<T, TResult>, ICacheSpecificationBuilder<T>

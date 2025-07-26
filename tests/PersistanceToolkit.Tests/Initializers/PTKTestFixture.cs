@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PersistanceToolkit.Abstractions;
-using PersistanceToolkit.Abstractions.Repositories;
-using PersistanceToolkit.Repositories;
-using PersistanceToolkit.Tests.DBContext;
-using PersistanceToolkit.Tests.Entities;
+using PersistenceToolkit.Abstractions;
+using PersistenceToolkit.Abstractions.Repositories;
+using PersistenceToolkit.Repositories;
+using PersistenceToolkit.Tests.DBContext;
+using PersistenceToolkit.Tests.Entities;
 
-namespace PersistanceToolkit.Tests.Initializers
+namespace PersistenceToolkit.Tests.Initializers
 {
     public class PTKTestFixture : IDisposable
     {

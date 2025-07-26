@@ -1,10 +1,10 @@
-using PersistanceToolkit.Domain;
-using PersistanceToolkit.Tests.Entities;
+using PersistenceToolkit.Domain;
+using PersistenceToolkit.Tests.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace PersistanceToolkit.Tests
+namespace PersistenceToolkit.Tests
 {
     public class AggregateWalkerTests
     {

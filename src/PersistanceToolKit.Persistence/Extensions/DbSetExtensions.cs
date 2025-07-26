@@ -1,6 +1,6 @@
-﻿using PersistanceToolkit.Persistence.SpecificationEvaluators;
+﻿using PersistenceToolkit.Persistence.SpecificationEvaluators;
 
-namespace PersistanceToolkit.Persistence.Extensions;
+namespace PersistenceToolkit.Persistence.Extensions;
 
 public static class DbSetExtensions
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace PersistanceToolKit.Persistence.Helpers
+namespace PersistenceToolkit.Persistence.Helpers
 {
     internal class ExpressionHelper
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PersistanceToolkit.Abstractions.Specifications;
+namespace PersistenceToolkit.Abstractions.Specifications;
 
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
 public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>

@@ -1,7 +1,7 @@
-using PersistanceToolkit.Abstractions.Specifications;
-using PersistanceToolkit.Tests.Entities;
+using PersistenceToolkit.Abstractions.Specifications;
+using PersistenceToolkit.Tests.Entities;
 
-namespace PersistanceToolkit.Tests.Specifications
+namespace PersistenceToolkit.Tests.Specifications
 {
     public class ParentSpec : BaseSpecification<Parent>
     {

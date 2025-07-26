@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+﻿namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 /// <summary>
 /// This evaluator applies EF Core's IgnoreQueryFilters feature to a given query

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using PersistanceToolkit.Domain;
+using PersistenceToolkit.Domain;
 
-namespace PersistanceToolKit.Persistence.Persistance
+namespace PersistenceToolkit.Persistence.Persistance
 {
     internal class EntityStateProcessor
     {

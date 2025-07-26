@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace PersistanceToolkit.Domain
+namespace PersistenceToolkit.Domain
 {
     public class AggregateWalker
     {

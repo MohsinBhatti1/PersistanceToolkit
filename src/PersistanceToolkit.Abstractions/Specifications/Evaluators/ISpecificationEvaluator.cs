@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions.Specifications;
+﻿namespace PersistenceToolkit.Abstractions.Specifications;
 
 /// <summary>
 /// Evaluates the logic encapsulated by an <see cref="ISpecification{T}"/>.

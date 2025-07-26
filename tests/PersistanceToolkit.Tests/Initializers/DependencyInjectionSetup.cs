@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PersistanceToolkit.Abstractions;
-using PersistanceToolkit.Abstractions.Repositories;
-using PersistanceToolkit.Persistence;
-using PersistanceToolkit.Repositories;
-using PersistanceToolkit.Tests.DBContext;
-using PersistanceToolKit.Persistence.Persistance;
+using PersistenceToolkit.Abstractions;
+using PersistenceToolkit.Abstractions.Repositories;
+using PersistenceToolkit.Persistence;
+using PersistenceToolkit.Repositories;
+using PersistenceToolkit.Tests.DBContext;
+using PersistenceToolkit.Persistence.Persistance;
 using System;
 
-namespace PersistanceToolkit.Tests.Initializers
+namespace PersistenceToolkit.Tests.Initializers
 {
     internal static class DependencyInjectionSetup
     {
@@ -31,7 +31,7 @@ namespace PersistanceToolkit.Tests.Initializers
                 return CreateInMemoryContext();
             });
 
-            services.AddPersistanceToolkit();
+            services.AddPersistenceToolkit();
         }
 
         private static SystemContext CreateInMemoryContext()

@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Abstractions
+﻿namespace PersistenceToolkit.Abstractions
 {
     public interface ISystemUser
     {

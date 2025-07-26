@@ -1,4 +1,4 @@
-﻿namespace PersistanceToolkit.Persistence.SpecificationEvaluators;
+﻿namespace PersistenceToolkit.Persistence.SpecificationEvaluators;
 
 /// <inheritdoc/>
 public class SpecificationEvaluator : ISpecificationEvaluator

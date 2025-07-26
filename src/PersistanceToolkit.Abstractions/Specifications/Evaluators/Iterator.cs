@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace PersistanceToolkit.Abstractions.Specifications;
+namespace PersistenceToolkit.Abstractions.Specifications;
 
 internal abstract class Iterator<TSource> : IEnumerable<TSource>, IEnumerator<TSource>
 {
