@@ -5,8 +5,8 @@ using PersistenceToolkit.Abstractions.Repositories;
 using PersistenceToolkit.Persistence;
 using PersistenceToolkit.Repositories;
 using PersistenceToolkit.Tests.DBContext;
-using PersistenceToolkit.Persistence.Persistance;
 using System;
+using PersistenceToolkit.Persistence.Persistence;
 
 namespace PersistenceToolkit.Tests.Initializers
 {

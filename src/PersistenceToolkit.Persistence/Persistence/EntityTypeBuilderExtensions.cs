@@ -1,4 +1,4 @@
-﻿namespace PersistenceToolkit.Persistence.Persistance
+﻿namespace PersistenceToolkit.Persistence.Persistence
 {
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using PersistenceToolkit.Persistence.Helpers;

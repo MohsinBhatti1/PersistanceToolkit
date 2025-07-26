@@ -10,10 +10,10 @@
     <Version>10.0.0</Version>
     <Authors>MohsinBhatti</Authors>
     <Company>MBDevForce</Company>
-    <Description>Domain entities and interfaces for PersistanceToolkit.</Description>
+    <Description>Domain entities and interfaces for PersistenceToolkit.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/MohsinBhatti1/PersistanceToolkit</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MohsinBhatti1/PersistanceToolkit</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/MohsinBhatti1/PersistenceToolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MohsinBhatti1/PersistenceToolkit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Copyright © MBDevForce 2025</Copyright>

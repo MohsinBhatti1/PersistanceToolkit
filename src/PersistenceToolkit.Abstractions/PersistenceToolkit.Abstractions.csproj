@@ -26,10 +26,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PersistanceToolkit.Domain\PersistenceToolkit.Domain.csproj" />
+    <InternalsVisibleTo Include="PersistenceToolkit.Persistence" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="PersistenceToolkit.Persistence" />
+    <ProjectReference Include="..\PersistenceToolkit.Domain\PersistenceToolkit.Domain.csproj" />
   </ItemGroup>
 </Project>

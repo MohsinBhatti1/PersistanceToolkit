@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using PersistenceToolkit.Domain;
 using PersistenceToolkit.Tests.Entities;
 using PersistenceToolkit.Tests.Initializers;
-using PersistenceToolkit.Persistence.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using PersistenceToolkit.Persistence.Persistence;
 
 namespace PersistenceToolkit.Tests
 {

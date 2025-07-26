@@ -2,7 +2,7 @@
 using PersistenceToolkit.Abstractions.Repositories;
 using PersistenceToolkit.Abstractions.Specifications;
 using PersistenceToolkit.Domain;
-using PersistenceToolkit.Persistence.Persistance;
+using PersistenceToolkit.Persistence.Persistence;
 using System.Data.SqlTypes;
 using System.Linq;
 

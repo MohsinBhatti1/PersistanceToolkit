@@ -498,7 +498,7 @@ namespace PersistenceToolkit.Tests
         }
 
         // Custom specification for filtering by title
-        public class CustomTitleSpec : BaseSpecification<Parent>
+        public class CustomTitleSpec : EntitySpecification<Parent>
         {
             public CustomTitleSpec(string title)
             {

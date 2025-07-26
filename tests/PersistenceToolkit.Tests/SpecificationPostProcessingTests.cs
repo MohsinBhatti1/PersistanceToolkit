@@ -341,7 +341,7 @@ namespace PersistenceToolkit.Tests
         }
 
         // Custom specifications for testing
-        public class ParentSpec : BaseSpecification<Parent>
+        public class ParentSpec : EntitySpecification<Parent>
         {
             public ParentSpec()
             {

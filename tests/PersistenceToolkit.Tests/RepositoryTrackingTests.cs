@@ -8,9 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using System;
-using PersistenceToolkit.Persistence.Persistance;
 using PersistenceToolkit.Tests.Entities;
 using PersistenceToolkit.Tests.Specifications;
+using PersistenceToolkit.Persistence.Persistence;
 
 namespace PersistenceToolkit.Tests
 {
@@ -411,7 +411,7 @@ namespace PersistenceToolkit.Tests
         }
 
         // Custom specification for testing
-        public class CustomTitleSpec : BaseSpecification<Parent>
+        public class CustomTitleSpec : EntitySpecification<Parent>
         {
             public CustomTitleSpec(string title)
             {

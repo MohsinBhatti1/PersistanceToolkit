@@ -1,7 +1,7 @@
 ﻿using PersistenceToolkit.Abstractions;
 using PersistenceToolkit.Abstractions.Repositories;
 using PersistenceToolkit.Domain;
-using PersistenceToolkit.Persistence.Persistance;
+using PersistenceToolkit.Persistence.Persistence;
 
 namespace PersistenceToolkit.Repositories
 {

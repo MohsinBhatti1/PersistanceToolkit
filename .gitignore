@@ -290,17 +290,17 @@ __pycache__/
 .vscode/
 /out.txt
 
-/src/PersistanceToolkit.Abstraction/bin
-/src/PersistanceToolkit.Abstraction/obj
+/src/PersistenceToolkit.Abstraction/bin
+/src/PersistenceToolkit.Abstraction/obj
 
-/src/PersistanceToolkit.Domain/bin
-/src/PersistanceToolkit.Domain/obj
+/src/PersistenceToolkit.Domain/bin
+/src/PersistenceToolkit.Domain/obj
 
-/src/PersistanceToolkit.Persistance/bin
-/src/PersistanceToolkit.Persistance/obj
+/src/PersistenceToolkit.Persistance/bin
+/src/PersistenceToolkit.Persistance/obj
 
-/tests/PersistanceToolkit.Tests/bin
-/tests/PersistanceToolkit.Tests/obj
+/tests/PersistenceToolkit.Tests/bin
+/tests/PersistenceToolkit.Tests/obj
 
 /Ardalis/Ardalis.Specification/bin
 /Ardalis/Ardalis.Specification/obj

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PersistenceToolkit.Tests.Entities;
 using PersistenceToolkit.Persistence.Configuration;
-using PersistenceToolkit.Persistence.Persistance;
+using PersistenceToolkit.Persistence.Persistence;
 
 namespace PersistenceToolkit.Tests.DBContext
 {

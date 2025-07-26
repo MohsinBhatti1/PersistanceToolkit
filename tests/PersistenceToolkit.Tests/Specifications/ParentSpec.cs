@@ -3,7 +3,7 @@ using PersistenceToolkit.Tests.Entities;
 
 namespace PersistenceToolkit.Tests.Specifications
 {
-    public class ParentSpec : BaseSpecification<Parent>
+    public class ParentSpec : EntitySpecification<Parent>
     {
         public ParentSpec()
         {

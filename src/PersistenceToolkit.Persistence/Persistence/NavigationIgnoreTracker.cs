@@ -1,4 +1,4 @@
-﻿namespace PersistenceToolkit.Persistence.Persistance
+﻿namespace PersistenceToolkit.Persistence.Persistence
 {
     internal static class NavigationIgnoreTracker
     {

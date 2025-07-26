@@ -25,19 +25,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Persistance\EntityAuditLogSetter.cs" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <InternalsVisibleTo Include="PersistenceToolkit.Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="PersistanceToolkit.Tests" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PersistanceToolkit.Abstractions\PersistenceToolkit.Abstractions.csproj" />
+    <ProjectReference Include="..\PersistenceToolkit.Abstractions\PersistenceToolkit.Abstractions.csproj" />
   </ItemGroup>
 </Project>
