@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+﻿using PersistanceToolkit.Abstractions.Specifications;
 using PersistanceToolkit.Domain;
 
 namespace PersistanceToolkit.Abstractions.Repositories

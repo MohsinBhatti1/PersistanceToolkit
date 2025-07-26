@@ -1,6 +1,4 @@
-﻿using Ardalis.Specification;
-using Microsoft.EntityFrameworkCore;
-using PersistanceToolkit.Abstractions;
+﻿using PersistanceToolkit.Abstractions;
 using PersistanceToolkit.Abstractions.Repositories;
 using PersistanceToolkit.Domain;
 using PersistanceToolKit.Persistence.Persistance;

@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+﻿using PersistanceToolkit.Abstractions.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;

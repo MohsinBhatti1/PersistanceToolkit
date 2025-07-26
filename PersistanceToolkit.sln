@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ardalis", "Ardalis", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43FC6B26-458E-432B-9FB0-31314E420AEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{236305D6-D22A-4F9C-93CA-F12E835A0583}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification", "Ardalis\Ardalis.Specification\Ardalis.Specification.csproj", "{E308640A-6024-6C2C-9C80-1D513B122C2D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EntityFrameworkCore", "Ardalis\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj", "{9AC1EBCF-5ED5-6215-C589-2678A527DB89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceToolkit.Abstractions", "src\PersistanceToolkit.Abstractions\PersistanceToolkit.Abstractions.csproj", "{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}"
 EndProject
@@ -27,14 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E308640A-6024-6C2C-9C80-1D513B122C2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AC1EBCF-5ED5-6215-C589-2678A527DB89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,8 +42,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E308640A-6024-6C2C-9C80-1D513B122C2D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{9AC1EBCF-5ED5-6215-C589-2678A527DB89} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{81737FA9-C2C1-1D55-1E87-6C40B4FD9F2E} = {43FC6B26-458E-432B-9FB0-31314E420AEE}
 		{6A9BB72C-3E65-EA3D-32EC-7C5E3080EEC1} = {43FC6B26-458E-432B-9FB0-31314E420AEE}
 		{2F9BB899-8774-4FF7-8D7B-3609A9FDF320} = {43FC6B26-458E-432B-9FB0-31314E420AEE}

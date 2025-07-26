@@ -1,4 +1,3 @@
-using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersistanceToolkit.Abstractions.Repositories;
@@ -49,6 +48,7 @@ namespace PersistanceToolkit.Tests
 
             // Assert
             Assert.NotNull(loadedEntity);
+
             
             // Verify the entity is not tracked by checking its EntityState
             var context = _parentTableRepository.GetType()

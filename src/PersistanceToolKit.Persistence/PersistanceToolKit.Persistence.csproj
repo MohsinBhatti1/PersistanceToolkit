@@ -3,7 +3,27 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!--<Nullable>enable</Nullable>-->
+
+    <!-- NuGet package metadata -->
+    <PackageId>PersistenceToolkit</PackageId>
+    <Version>10.0.0</Version>
+    <Authors>MohsinBhatti</Authors>
+    <Company>MBDevForce</Company>
+    <Description>Abstractions and interfaces for PersistenceToolkit.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/MohsinBhatti1/PersistenceToolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MohsinBhatti1/PersistenceToolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright © MBDevForce 2025</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <IncludeReferencedProjects>false</IncludeReferencedProjects>
+    <!-- Important! -->
+    <PackageTags>efcore;repository;specification;ddd;architecture;infrastructure</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,8 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ardalis\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\PersistanceToolkit.Abstractions\PersistanceToolkit.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
