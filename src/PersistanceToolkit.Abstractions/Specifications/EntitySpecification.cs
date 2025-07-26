@@ -5,12 +5,12 @@ using System;
 
 namespace PersistanceToolkit.Abstractions.Specifications
 {
-    public abstract class BaseSpecification<T> : Specification<T>
+    public abstract class EntitySpecification<T> : Specification<T>
         where T : Entity
     {
         public bool IgnoreCompanyFilter { get; set; }
         public bool IncludeDeletedRecords { get; set; }
-        public BaseSpecification()
+        public EntitySpecification()
         {
             Query.PostProcessingAction(a =>
             {
@@ -240,7 +240,7 @@ namespace PersistanceToolkit.Abstractions.Specifications
             }
         }
     }
-    public abstract class BaseSpecification<T, TResult> : Specification<T, TResult>
+    public abstract class EntitySpecification<T, TResult> : Specification<T, TResult>
         where T : Entity
     {
         public bool IgnoreCompanyFilter { get; set; }

@@ -3,7 +3,7 @@ using PersistanceToolkit.Domain;
 
 namespace PersistanceToolkit.Abstractions.Specifications
 {
-    public class GetByIdSpecification<T> : BaseSpecification<T>
+    public class GetByIdSpecification<T> : EntitySpecification<T>
         where T : Entity
     {
         public GetByIdSpecification(int id)

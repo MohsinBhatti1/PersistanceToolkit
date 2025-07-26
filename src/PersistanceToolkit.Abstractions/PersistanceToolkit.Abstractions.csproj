@@ -22,8 +22,6 @@
     <IncludeSource>true</IncludeSource>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <IncludeReferencedProjects>false</IncludeReferencedProjects>
-    <!-- Turn this off for custom handling -->
     <PackageTags>efcore;repository;specification;ddd;architecture;infrastructure</PackageTags>
   </PropertyGroup>
 

@@ -18,7 +18,7 @@ namespace PersistanceToolkit.Repositories
         #region Specification Methods
         protected override IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
         {
-            if (specification is BaseSpecification<T> baseSpec)
+            if (specification is EntitySpecification<T> baseSpec)
                 ApplyTenantAndSoftDeleteFilters(baseSpec);
 
             return base.ApplySpecification(specification, evaluateCriteriaOnly);
@@ -26,13 +26,13 @@ namespace PersistanceToolkit.Repositories
 
         protected override IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is BaseSpecification<T, TResult> baseSpec)
+            if (specification is EntitySpecification<T, TResult> baseSpec)
                 ApplyTenantAndSoftDeleteFilters(baseSpec);
 
             return base.ApplySpecification(specification);
         }
 
-        private void ApplyTenantAndSoftDeleteFilters(BaseSpecification<T> specification)
+        private void ApplyTenantAndSoftDeleteFilters(EntitySpecification<T> specification)
         {
             var context = (BaseContext)DbContext;
 
@@ -49,7 +49,7 @@ namespace PersistanceToolkit.Repositories
             }
         }
 
-        private void ApplyTenantAndSoftDeleteFilters<TResult>(BaseSpecification<T, TResult> specification)
+        private void ApplyTenantAndSoftDeleteFilters<TResult>(EntitySpecification<T, TResult> specification)
         {
             var context = (BaseContext)DbContext;
 
